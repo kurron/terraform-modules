@@ -8,6 +8,16 @@ variable "cidr_block" {
     default = "10.0.0.0/16"
 }
 
+variable "enable_dns_hostnames" {
+  description = "TODO"
+  default = true
+}
+
+variable "instance_tenancy" {
+  description = "How EC2 instances should be combined or separated from other instances"
+  default = "default"
+}
+
 variable "name" {
     description = "The name of this VPC."
     default = "Primary VPC"
