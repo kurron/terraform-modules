@@ -20,7 +20,7 @@ variable "realm" {
 
 variable "purpose" {
     description = "A tag indicating why all the infrastructure exists, eg. load-testing."
-    default = "prototyping" 
+    default = "Prototyping" 
 }
 
 variable "managed_by" {
