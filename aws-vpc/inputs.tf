@@ -18,6 +18,34 @@ variable "instance_tenancy" {
   default = "default"
 }
 
+variable "public_subnets" { 
+    description = "A list of subnets that can be accessed via the internet."
+    default = "10.0.10.0/24,10.0.30.0/24" 
+}
+
+variable "private_subnets" { 
+    description = "A list of subnets that cannot be accessed via the internet."
+    default = "10.0.20.0/24,10.0.40.0/24" 
+}
+
+variable "availability_zones" { 
+    description = "A list of availability zones we want to be in."
+    default = "us-west-2a,us-west-2b,us-west-2c" 
+}
+
+variable "subnet_name" {
+    default = {
+        "0" = "Alpha"
+        "1" = "Bravo"
+        "2" = "Charlie"
+        "3" = "Delta"
+        "4" = "Echo"
+        "5" = "Foxtrot"
+        "6" = "Golf"
+        "7" = "Hotel"
+    }
+}
+
 variable "name" {
     description = "The name of this VPC."
     default = "Primary VPC"
