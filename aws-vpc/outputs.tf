@@ -1,23 +1,23 @@
-output "VPC ID" {
+output "id" {
     value = "${aws_vpc.main.id}"
 }
 
-output "VPC Network" {
+output "network" {
     value = "${aws_vpc.main.cidr_block}"
 }
 
-output "VPC Tenancy" {
+output "tenancy" {
     value = "${aws_vpc.main.instance_tenancy}"
 }
 
-output "VPC Route Table" {
+output "route_table" {
     value = "${aws_vpc.main.main_route_table_id}"
 }
 
-output "VPC Default ACL" {
+output "default_acl" {
     value = "${aws_vpc.main.default_network_acl_id}"
 }
 
-output "VPC Default Security Group" {
+output "default_security_group" {
     value = "${aws_vpc.main.default_security_group_id}"
 }
