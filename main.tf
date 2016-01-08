@@ -29,3 +29,12 @@ module "secure-http" {
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
 }
+
+module "insecure-http" {
+    source = "aws/security-groups/insecure-http"
+    vpc_id =  "${module.vpc.id}"
+    name = "VPC Insecure HTTP"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
