@@ -1,6 +1,6 @@
 resource "aws_security_group" "security_group" {
     name = "${var.name}"
-    description = "Allow inbound and outbound access over secure HTTP ports (443)."
+    description = "Allow inbound access over secure HTTP ports (443)."
     vpc_id = "${var.vpc_id}"
     tags {
         Name = "${var.name}"

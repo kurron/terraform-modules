@@ -38,3 +38,12 @@ module "insecure-http" {
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
 }
+
+module "ssh" {
+    source = "aws/security-groups/ssh"
+    vpc_id =  "${module.vpc.id}"
+    name = "VPC SSH"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
