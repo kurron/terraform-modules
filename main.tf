@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 module "aws-vpc" {
-    source = "aws-vpc"
+    source = "aws/vpc"
     aws_region = "${var.aws_region}"
     name = "Example VPC"
     realm = "${var.realm}"
