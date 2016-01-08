@@ -3,7 +3,7 @@ provider "aws" {
     max_retries = 10
 }
 
-module "aws-vpc" {
+module "vpc" {
     source = "aws/vpc"
     aws_region = "${var.aws_region}"
     name = "Example VPC"
@@ -12,11 +12,19 @@ module "aws-vpc" {
     managed_by = "${var.managed_by}"
 }
 
-module "aws-vpc-security-group" {
+module "all-ports" {
     source = "aws/security-groups/wide-open"
-#   aws_region = "${var.aws_region}"
-    vpc_id =  "${module.aws-vpc.id}"
+    vpc_id =  "${module.vpc.id}"
     name = "VPC Wide Open"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
+
+module "secure-http" {
+    source = "aws/security-groups/secure-http"
+    vpc_id =  "${module.vpc.id}"
+    name = "VPC Secure HTTP"
     realm = "${var.realm}"
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
