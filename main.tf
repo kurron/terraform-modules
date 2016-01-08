@@ -13,7 +13,7 @@ module "aws-vpc" {
 }
 
 module "aws-vpc-security-group" {
-    source = "aws-security-groups/wide-open"
+    source = "aws/security-groups/wide-open"
 #   aws_region = "${var.aws_region}"
     vpc_id =  "${module.aws-vpc.id}"
     name = "VPC Wide Open"
