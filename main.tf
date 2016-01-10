@@ -105,3 +105,9 @@ module "unbalanced-service" {
     task = "${module.task.id}"
     cluster = "${module.cluster.id}"
 }
+
+module "repository" {
+    source = "aws/container-service/repository"
+    name = "Docker Registry"
+    policy = "${file("policies/repository.json")}"
+}
