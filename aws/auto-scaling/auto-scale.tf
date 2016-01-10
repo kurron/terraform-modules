@@ -97,6 +97,32 @@ variable "up_cron" {
     description = "The time when recurring future actions will start."
     default = "0 8 1-31 1-12 1-5"
 }
+
+variable "down_name" {
+    description = "The name of the spin-down scaling action."
+    default = "spin-down"
+}
+
+variable "down_min_size" {
+    description = "The minimum size for the scaling group"
+    default = "0"
+}
+
+variable "down_max_size" {
+    description = "The maximum size for the scaling group"
+    default = "0"
+}
+
+variable "down_desired_capacity" {
+    description = "The number of EC2 instances that should be running in the group."
+    default = "0"
+}
+
+variable "down_cron" {
+    description = "The time when recurring future actions will start."
+    default = "0 17 1-31 1-12 1-7"
+}
+
 # ------------ resources ----------------------
 
 resource "aws_autoscaling_group" "aag" {
@@ -150,6 +176,15 @@ resource "aws_autoscaling_schedule" "up" {
     max_size = "${var.up_max_size}" 
     desired_capacity = "${var.up_desired_capacity}"
     recurrence = "${var.up_cron}"
+    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
+}
+
+resource "aws_autoscaling_schedule" "down" {
+    scheduled_action_name = "${var.down_name}"
+    min_size = "${var.down_min_size}" 
+    max_size = "${var.down_max_size}" 
+    desired_capacity = "${var.down_desired_capacity}"
+    recurrence = "${var.down_cron}"
     autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 }
 
