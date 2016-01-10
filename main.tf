@@ -47,3 +47,13 @@ module "ssh" {
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
 }
+
+module "scaling-group" {
+    source = "aws/auto-scaling"
+    zone_ids = "${split(",", module.vpc.public_subnet_ids)}"
+    launch_configuration_name = "bob"
+    name = "Experiment"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}

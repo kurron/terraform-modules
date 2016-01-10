@@ -21,3 +21,11 @@ output "default_acl" {
 output "default_security_group" {
     value = "${aws_vpc.main.default_security_group_id}"
 }
+
+output "public_subnet_ids" {
+    value = "${join(",", aws_subnet.public.*.id)}"
+}
+
+output "private_subnet_ids" {
+    value = "${join(",", aws_subnet.private.*.id)}"
+}
