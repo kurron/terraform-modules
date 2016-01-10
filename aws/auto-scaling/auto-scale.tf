@@ -68,6 +68,11 @@ variable "launch_configuration_name" {
     description = "The name of the launch configuration to use."
 }
 
+variable "cooldown" {
+    description = "The amount of time, in seconds, after a scaling activity completes and before the next scaling activity can start."
+    default = "60"
+}
+
 # ------------ resources ----------------------
 
 resource "aws_autoscaling_group" "aag" {
@@ -77,7 +82,7 @@ resource "aws_autoscaling_group" "aag" {
     launch_configuration = "${var.launch_configuration_name}"
     health_check_grace_period = "${var.health_check_grace_period}" 
     health_check_type = "${var.health_check_type}"
-    desired_capacity = "${var.desired_capacity}" 
+#   desired_capacity = "${var.desired_capacity}" 
     force_delete = "${var.force_delete}"
     vpc_zone_identifier = ["${var.zone_ids}"]
     wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
@@ -105,6 +110,14 @@ resource "aws_autoscaling_group" "aag" {
         value = "${var.managed_by}"
         propagate_at_launch = true
     }
+}
+
+resource "aws_autoscaling_policy" "policy" {
+    name = "${var.name}"
+    scaling_adjustment = "${var.desired_capacity}" 
+    adjustment_type = "ExactCapacity"
+    cooldown = "${var.cooldown}"
+    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 }
 
 # ------------ outputs ----------------------
