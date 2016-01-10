@@ -48,10 +48,17 @@ module "ssh" {
     managed_by = "${var.managed_by}"
 }
 
+module "launch-configuration" {
+    source = "aws/launch-configuration"
+    name = "${var.launch_configuration_name}"
+    image_id = "${lookup(var.aws_amis, var.aws_region)}"
+    key_name = "BOB"
+}
+
 module "scaling-group" {
     source = "aws/auto-scaling"
     zone_ids = "${split(",", module.vpc.public_subnet_ids)}"
-    launch_configuration_name = "bob"
+    launch_configuration_name = "${var.launch_configuration_name}"
     name = "Experiment"
     realm = "${var.realm}"
     purpose = "${var.purpose}"
