@@ -85,3 +85,15 @@ module "task" {
     family = "example-containers"
     definition = "${file("task-definitions/example.json")}"
 }
+
+module "balanced-service" {
+    source = "aws/container-service/balanced-service"
+    name = "Balanced Service"
+    role = "some IAM role"
+    desired_count = "1"
+    task = "${module.task.id}"
+    elb = "${module.load-balancer.name}"
+    cluster = "${module.cluster.id}"
+    container_name = "SOME CONTAINER NAME"
+    container_port = "80"
+}
