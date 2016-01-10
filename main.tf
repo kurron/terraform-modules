@@ -97,3 +97,11 @@ module "balanced-service" {
     container_name = "SOME CONTAINER NAME"
     container_port = "80"
 }
+
+module "unbalanced-service" {
+    source = "aws/container-service/unbalanced-service"
+    name = "Unbalanced Service"
+    desired_count = "1"
+    task = "${module.task.id}"
+    cluster = "${module.cluster.id}"
+}
