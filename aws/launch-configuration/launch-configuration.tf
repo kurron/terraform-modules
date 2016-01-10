@@ -65,6 +65,8 @@ resource "aws_launch_configuration" "alc" {
 #   root_block_device = ???
 #   ebs_block_device = ???
 #   ephemeral_block_device = ???
+
+    lifecycle { create_before_destroy = true }
 }
 
 # ------------ outputs ----------------------

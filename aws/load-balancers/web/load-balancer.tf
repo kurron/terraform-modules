@@ -127,6 +127,8 @@ resource "aws_elb" "elb" {
         target              = "HTTP:${var.instance_port}/"
     }
 
+    lifecycle { create_before_destroy = true }
+
     tags {
         Name = "${var.name}"
         Realm = "${var.realm}"

@@ -76,6 +76,8 @@ resource "aws_vpc" "main" {
     enable_dns_hostnames = "${var.enable_dns_hostnames}"
     instance_tenancy = "${var.instance_tenancy}"
 
+    lifecycle { create_before_destroy = true }
+
     tags {
         Name = "${var.name}"
         Realm = "${var.realm}"
@@ -86,6 +88,8 @@ resource "aws_vpc" "main" {
 
 resource "aws_internet_gateway" "main" {
     vpc_id = "${aws_vpc.main.id}"
+
+    lifecycle { create_before_destroy = true }
 
     tags {
         Name = "${var.name}"
@@ -102,6 +106,8 @@ resource "aws_route_table" "main" {
         gateway_id = "${aws_internet_gateway.main.id}"
     }
 
+    lifecycle { create_before_destroy = true }
+
     tags {
         Name = "${var.name}"
         Realm = "${var.realm}"
@@ -113,6 +119,8 @@ resource "aws_route_table" "main" {
 resource "aws_main_route_table_association" "main" {
     vpc_id = "${aws_vpc.main.id}"
     route_table_id = "${aws_route_table.main.id}"
+
+    lifecycle { create_before_destroy = true }
 }
 
 resource "aws_subnet" "private" {
@@ -120,6 +128,9 @@ resource "aws_subnet" "private" {
     cidr_block = "${element(split(",", var.private_subnets), count.index)}"
     availability_zone = "${element(split(",", var.availability_zones), count.index)}"
     count = "${length(compact(split(",", var.private_subnets)))}"
+
+    lifecycle { create_before_destroy = true }
+
     tags {
         Name = "Private ${lookup(var.subnet_name, count.index)}"
         Realm = "${var.realm}"
@@ -133,6 +144,9 @@ resource "aws_subnet" "public" {
     cidr_block = "${element(split(",", var.public_subnets), count.index)}"
     availability_zone = "${element(split(",", var.availability_zones), count.index)}"
     count = "${length(compact(split(",", var.public_subnets)))}"
+
+    lifecycle { create_before_destroy = true }
+
     tags {
         Name = "Public ${lookup(var.subnet_name, count.index)}"
         Realm = "${var.realm}"

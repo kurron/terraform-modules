@@ -137,6 +137,8 @@ resource "aws_autoscaling_group" "aag" {
     vpc_zone_identifier = ["${var.zone_ids}"]
     wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
 
+    lifecycle { create_before_destroy = true }
+
     tag {
         key = "Name"
         value = "${var.name}"
