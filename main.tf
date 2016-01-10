@@ -64,3 +64,13 @@ module "scaling-group" {
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
 }
+
+module "load-balancer" {
+    source = "aws/load-balancers/web"
+    subnets = "${split(",", module.vpc.public_subnet_ids)}"
+    certificate_id = "BOB"
+    name = "web-balancer"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
