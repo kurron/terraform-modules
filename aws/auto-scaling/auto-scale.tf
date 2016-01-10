@@ -73,6 +73,30 @@ variable "cooldown" {
     default = "60"
 }
 
+variable "up_name" {
+    description = "The name of the spin-up scaling action."
+    default = "spin-up"
+}
+
+variable "up_min_size" {
+    description = "The minimum size for the scaling group"
+    default = "1"
+}
+
+variable "up_max_size" {
+    description = "The maximum size for the scaling group"
+    default = "6"
+}
+
+variable "up_desired_capacity" {
+    description = "The number of EC2 instances that should be running in the group."
+    default = "3"
+}
+
+variable "up_cron" {
+    description = "The time when recurring future actions will start."
+    default = "0 8 1-31 1-12 1-5"
+}
 # ------------ resources ----------------------
 
 resource "aws_autoscaling_group" "aag" {
@@ -117,6 +141,15 @@ resource "aws_autoscaling_policy" "policy" {
     scaling_adjustment = "${var.desired_capacity}" 
     adjustment_type = "ExactCapacity"
     cooldown = "${var.cooldown}"
+    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
+}
+
+resource "aws_autoscaling_schedule" "up" {
+    scheduled_action_name = "${var.up_name}"
+    min_size = "${var.up_min_size}" 
+    max_size = "${var.up_max_size}" 
+    desired_capacity = "${var.up_desired_capacity}"
+    recurrence = "${var.up_cron}"
     autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 }
 
