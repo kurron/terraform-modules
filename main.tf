@@ -74,3 +74,9 @@ module "load-balancer" {
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
 }
+
+module "cluster" {
+    source = "aws/container-service/cluster"
+    name = "container-cluster"
+}
+
