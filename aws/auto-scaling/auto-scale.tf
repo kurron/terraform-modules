@@ -132,7 +132,7 @@ resource "aws_autoscaling_group" "aag" {
     launch_configuration = "${var.launch_configuration_name}"
     health_check_grace_period = "${var.health_check_grace_period}" 
     health_check_type = "${var.health_check_type}"
-#   desired_capacity = "${var.desired_capacity}" 
+    desired_capacity = "${var.desired_capacity}" 
     force_delete = "${var.force_delete}"
     vpc_zone_identifier = ["${var.subnet_ids}"]
     wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
