@@ -48,6 +48,15 @@ module "ssh" {
     managed_by = "${var.managed_by}"
 }
 
+module "unrestrected-egress" {
+    source = "aws/security-groups/unrestricted-egress"
+    vpc_id =  "${module.vpc.id}"
+    name = "VPC Unrestricted Egress"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
+
 module "launch-configuration" {
     source = "aws/launch-configuration"
     name = "${var.launch_configuration_name}"
