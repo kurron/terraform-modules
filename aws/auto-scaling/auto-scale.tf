@@ -50,7 +50,7 @@ variable "force_delete" {
     default = "false"
 }
 
-variable "zone_ids" {
+variable "subnet_ids" {
     description = "A list of subnet IDs to launch resources in."
 }
 
@@ -134,7 +134,7 @@ resource "aws_autoscaling_group" "aag" {
     health_check_type = "${var.health_check_type}"
 #   desired_capacity = "${var.desired_capacity}" 
     force_delete = "${var.force_delete}"
-    vpc_zone_identifier = ["${var.zone_ids}"]
+    vpc_zone_identifier = ["${var.subnet_ids}"]
     wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
 
     lifecycle { create_before_destroy = true }
