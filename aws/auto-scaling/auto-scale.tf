@@ -172,23 +172,24 @@ resource "aws_autoscaling_policy" "policy" {
     autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 }
 
-resource "aws_autoscaling_schedule" "up" {
-    scheduled_action_name = "${var.up_name}"
-    min_size = "${var.up_min_size}" 
-    max_size = "${var.up_max_size}" 
-    desired_capacity = "${var.up_desired_capacity}"
-    recurrence = "${var.up_cron}"
-    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
-}
+# Do not enable schedules unto the next release -- the merge for the bug fix will be in then
+#resource "aws_autoscaling_schedule" "up" {
+    #scheduled_action_name = "${var.up_name}"
+    #min_size = "${var.up_min_size}" 
+    #max_size = "${var.up_max_size}" 
+    #desired_capacity = "${var.up_desired_capacity}"
+    #recurrence = "${var.up_cron}"
+    #autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
+#}
 
-resource "aws_autoscaling_schedule" "down" {
-    scheduled_action_name = "${var.down_name}"
-    min_size = "${var.down_min_size}" 
-    max_size = "${var.down_max_size}" 
-    desired_capacity = "${var.down_desired_capacity}"
-    recurrence = "${var.down_cron}"
-    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
-}
+#resource "aws_autoscaling_schedule" "down" {
+    #scheduled_action_name = "${var.down_name}"
+    #min_size = "${var.down_min_size}" 
+    #max_size = "${var.down_max_size}" 
+    #desired_capacity = "${var.down_desired_capacity}"
+    #recurrence = "${var.down_cron}"
+    #autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
+#}
 
 # ------------ outputs ----------------------
 
