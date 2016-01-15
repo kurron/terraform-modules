@@ -47,7 +47,7 @@ resource "aws_security_group" "security_group" {
         Managed-By = "${var.managed_by}"    
     }
 
-    lifecycle { create_before_destroy = true }
+#   lifecycle { create_before_destroy = true }
 
     ingress {
         from_port = 0

@@ -42,7 +42,7 @@ resource "aws_security_group" "security_group" {
         Managed-By = "${var.managed_by}"    
     }
 
-    lifecycle { create_before_destroy = true }
+#   lifecycle { create_before_destroy = true }
 
     egress {
         from_port = 0
