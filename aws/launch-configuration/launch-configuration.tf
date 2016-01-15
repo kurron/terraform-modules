@@ -56,7 +56,7 @@ resource "aws_launch_configuration" "alc" {
     instance_type = "${var.instance_type}"
     iam_instance_profile = "${var.instance_profile}"
     key_name = "${var.key_name}"
-    security_groups = ["${var.security_groups}"]
+    security_groups = ["${split(",", var.security_groups)}"]
     associate_public_ip_address = "${var.associate_public_ip}"
     user_data = "${var.user_data}"
     enable_monitoring = "${var.user_data}"
