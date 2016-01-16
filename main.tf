@@ -103,6 +103,12 @@ module "role_assumption_policy" {
     policy_path = "policies/ec2-role-assumption.json"
 }
 
+module "ec2_role" {
+    source = "aws/iam/role"
+    name = "ec2-instances-role"
+    policy_path = "policies/allow-role-assumption.json"
+}
+
 module "launch-configuration" {
     source = "aws/launch-configuration"
     name = "${var.launch_configuration_name}"
