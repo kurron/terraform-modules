@@ -2,7 +2,6 @@
 
 variable "name" {
     description = "The name of the launch configuration."
-    default = "Experimental Launch Configuration"
 }
 
 variable "image_id" {
@@ -16,7 +15,6 @@ variable "instance_type" {
 
 variable "instance_profile" {
     description = "The IAM instance profile to associate with launched instances."
-    default = ""
 }
 
 variable "key_name" {
@@ -25,7 +23,6 @@ variable "key_name" {
 
 variable "security_groups" {
     description = "A list of associated security group IDs."
-    default = ""
 }
 
 variable "associate_public_ip" {

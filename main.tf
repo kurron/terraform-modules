@@ -43,6 +43,11 @@ variable "launch_configuration_name" {
     default = "micro-instance" 
 }
 
+variable "key_name" {
+    description = "The name of the SSH key to use."
+    default = "asgard-lite-test" 
+}
+
 # Ubuntu Server 14.04 LTS (HVM), SSD Volume Type, 64-bit
 variable "aws_amis" {
     description = "AMI to build the instances from."
@@ -75,5 +80,26 @@ module "vpc" {
     realm = "${var.realm}"
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
+}
+
+module "null_security_group" {
+    source = "aws/security-groups/wide-open"
+    vpc_id =  "${module.vpc.id}"
+    name = "Null Security Group"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
+
+module "launch-configuration" {
+    source = "aws/launch-configuration"
+    name = "${var.launch_configuration_name}"
+    image_id = "${lookup(var.aws_amis, var.aws_region)}"
+    instance_type = "t2.nano"
+    instance_profile = ""
+    key_name = "${var.key_name}"
+    security_groups = "${module.null_security_group.id}"
+    user_data = ""
+    ebs_optimized = false
 }
 

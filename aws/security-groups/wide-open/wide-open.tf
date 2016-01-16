@@ -16,22 +16,18 @@ variable "egress_cidr" {
 
 variable "name" {
     description = "The name of this security group."
-    default = "wide-open"
 }
 
 variable "realm" {
     description = "The logical group that all of the infrastructure belongs to. Similar idea to an AWS stack."
-    default = "terraform-experimentation" 
 }
 
 variable "purpose" {
     description = "A tag indicating why all the infrastructure exists, eg. load-testing."
-    default = "Prototyping" 
 }
 
 variable "managed_by" {
     description = "The tool that manages this resource."
-    default = "Terraform" 
 }
 
 #------------------- resources -----------------
