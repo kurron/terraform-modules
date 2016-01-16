@@ -124,7 +124,7 @@ module "launch-configuration" {
     name = "${var.launch_configuration_name}"
     image_id = "${lookup(var.aws_amis, var.aws_region)}"
     instance_type = "t2.nano"
-    instance_profile = ""
+    instance_profile = "${module.ec2_instance_profile.id}"
     key_name = "${var.key_name}"
     security_groups = "${module.null_security_group.id}"
     ebs_optimized = false
