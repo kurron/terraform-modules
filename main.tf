@@ -48,6 +48,11 @@ variable "key_name" {
     default = "asgard-lite-test" 
 }
 
+variable "server_user_data" {
+    description = "The path to the file containing the EC2 user data."
+    default = "user-data/touch.txt" 
+}
+
 # Ubuntu Server 14.04 LTS (HVM), SSD Volume Type, 64-bit
 variable "aws_amis" {
     description = "AMI to build the instances from."
@@ -99,7 +104,7 @@ module "launch-configuration" {
     instance_profile = ""
     key_name = "${var.key_name}"
     security_groups = "${module.null_security_group.id}"
-    user_data = ""
     ebs_optimized = false
+    user_data = "${file( var.server_user_data )}" 
 }
 

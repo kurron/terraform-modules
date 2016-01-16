@@ -10,7 +10,6 @@ variable "image_id" {
 
 variable "instance_type" {
     description = "The size of instance to launch."
-    default = "t2.micro"
 }
 
 variable "instance_profile" {
@@ -31,7 +30,7 @@ variable "associate_public_ip" {
 }
 
 variable "user_data" {
-    description = "The user data to provide when launching the instance."
+    description = "The path to a file containing the EC2 user data"
     default = ""
 }
 
@@ -45,6 +44,10 @@ variable "spot_price" {
     default = ""
 }
 
+variable "enable_monitoring" {
+    description = "Enables/disables detailed monitoring."
+    default = "true"
+}
 # ------------ resources ----------------------
 
 resource "aws_launch_configuration" "alc" {
@@ -56,7 +59,7 @@ resource "aws_launch_configuration" "alc" {
     security_groups = ["${split(",", var.security_groups)}"]
     associate_public_ip_address = "${var.associate_public_ip}"
     user_data = "${var.user_data}"
-    enable_monitoring = "${var.user_data}"
+    enable_monitoring = "${var.enable_monitoring}"
     ebs_optimized = "${var.ebs_optimized}"
     spot_price = "${var.spot_price}"
 #   root_block_device = ???
