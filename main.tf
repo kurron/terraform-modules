@@ -69,6 +69,10 @@ variable "aws_amis" {
     }
 }
 
+variable "ec2_instance_role_name" {
+    default = "ec2-instances-role" 
+}
+
 # ------------ resources -------------------
 provider "aws" {
     region = "${var.aws_region}"
@@ -105,8 +109,14 @@ module "role_assumption_policy" {
 
 module "ec2_role" {
     source = "aws/iam/role"
-    name = "ec2-instances-role"
+    name = "${var.ec2_instance_role_name}"
     policy_path = "policies/allow-role-assumption.json"
+}
+
+module "ec2_instance_profile" {
+    source = "aws/iam/instance-profile"
+    name = "ec2-instances-profile"
+    roles = "${var.ec2_instance_role_name}"
 }
 
 module "launch-configuration" {
