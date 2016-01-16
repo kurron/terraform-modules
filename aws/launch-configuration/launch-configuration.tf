@@ -14,6 +14,7 @@ variable "instance_type" {
 
 variable "instance_profile" {
     description = "The IAM instance profile to associate with launched instances."
+    default = ""
 }
 
 variable "key_name" {
@@ -48,6 +49,7 @@ variable "enable_monitoring" {
     description = "Enables/disables detailed monitoring."
     default = "true"
 }
+
 # ------------ resources ----------------------
 
 resource "aws_launch_configuration" "alc" {

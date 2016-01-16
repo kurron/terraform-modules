@@ -96,6 +96,13 @@ module "null_security_group" {
     managed_by = "${var.managed_by}"
 }
 
+module "role_assumption_policy" {
+    source = "aws/iam/policy"
+    name = "ec2-role-assumption"
+    description = "Allows EC2 instances to assume roles."
+    policy_path = "policies/ec2-role-assumption.json"
+}
+
 module "launch-configuration" {
     source = "aws/launch-configuration"
     name = "${var.launch_configuration_name}"
