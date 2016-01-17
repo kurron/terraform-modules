@@ -155,3 +155,8 @@ module "scheduled_scaling_group" {
     launch_configuration_name = "${var.launch_configuration_name}"
 }
 
+module "cluster" {
+    source = "aws/container-service/cluster"
+    name = "container-cluster"
+}
+

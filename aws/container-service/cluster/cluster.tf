@@ -2,14 +2,13 @@
 
 variable "name" {
     description = "The name of the cluster (up to 255 letters, numbers, hyphens, and underscores)."
-    default = "container-cluster"
 }
 
 # ------------ resources ----------------------
 
 resource "aws_ecs_cluster" "cluster" {
     name = "${var.name}"
-    lifecycle { create_before_destroy = true }
+#   lifecycle { create_before_destroy = true }
 }
 
 # ------------ outputs ----------------------
