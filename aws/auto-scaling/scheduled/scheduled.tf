@@ -2,32 +2,26 @@
 
 variable "name" {
     description = "The name of this auto-scaling group."
-    default = "Primary Scaling Group"
 }
 
 variable "realm" {
     description = "The logical group that all of the infrastructure belongs to. Similar idea to an AWS stack."
-    default = "terraform-experimentation"
 }
 
 variable "purpose" {
     description = "A tag indicating why all the infrastructure exists, eg. load-testing."
-    default = "Prototyping"
 }
 
 variable "managed_by" {
     description = "The tool that manages this resource."
-    default = "Terraform"
 }
 
 variable "max_size" {
     description = "The maximum number of EC2 instances to have running in the group."
-    default = "6"
 }
 
 variable "min_size" {
     description = "The minimum number of EC2 instances to have running in the group."
-    default = "3"
 }
 
 variable "health_check_grace_period" {
@@ -42,7 +36,6 @@ variable "health_check_type" {
 
 variable "desired_capacity" {
     description = "The number of Amazon EC2 instances that should be running in the group."
-    default = "3"
 }
 
 variable "force_delete" {
@@ -75,22 +68,18 @@ variable "cooldown" {
 
 variable "up_name" {
     description = "The name of the spin-up scaling action."
-    default = "spin-up"
 }
 
 variable "up_min_size" {
     description = "The minimum size for the scaling group"
-    default = "1"
 }
 
 variable "up_max_size" {
     description = "The maximum size for the scaling group"
-    default = "6"
 }
 
 variable "up_desired_capacity" {
     description = "The number of EC2 instances that should be running in the group."
-    default = "3"
 }
 
 variable "up_cron" {
@@ -100,7 +89,6 @@ variable "up_cron" {
 
 variable "down_name" {
     description = "The name of the spin-down scaling action."
-    default = "spin-down"
 }
 
 variable "down_min_size" {
@@ -172,24 +160,31 @@ resource "aws_autoscaling_policy" "policy" {
     autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 }
 
-# Do not enable schedules unto the next release -- the merge for the bug fix will be in then
-#resource "aws_autoscaling_schedule" "up" {
-    #scheduled_action_name = "${var.up_name}"
-    #min_size = "${var.up_min_size}" 
-    #max_size = "${var.up_max_size}" 
-    #desired_capacity = "${var.up_desired_capacity}"
-    #recurrence = "${var.up_cron}"
-    #autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
-#}
+resource "aws_autoscaling_schedule" "up" {
+    scheduled_action_name = "${var.up_name}"
+    min_size = "${var.up_min_size}" 
+    max_size = "${var.up_max_size}" 
+    desired_capacity = "${var.up_desired_capacity}"
+    recurrence = "${var.up_cron}"
+    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 
-#resource "aws_autoscaling_schedule" "down" {
-    #scheduled_action_name = "${var.down_name}"
-    #min_size = "${var.down_min_size}" 
-    #max_size = "${var.down_max_size}" 
-    #desired_capacity = "${var.down_desired_capacity}"
-    #recurrence = "${var.down_cron}"
-    #autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
-#}
+    # necessary until the next release of Terraform
+    start_time = "2016-12-01T00:00:00Z" 
+    end_time = "2016-12-31T00:00:00Z" 
+}
+
+resource "aws_autoscaling_schedule" "down" {
+    scheduled_action_name = "${var.down_name}"
+    min_size = "${var.down_min_size}" 
+    max_size = "${var.down_max_size}" 
+    desired_capacity = "${var.down_desired_capacity}"
+    recurrence = "${var.down_cron}"
+    autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
+
+    # necessary until the next release of Terraform
+    start_time = "2016-11-01T00:00:00Z" 
+    end_time = "2016-11-31T00:00:00Z" 
+}
 
 # ------------ outputs ----------------------
 

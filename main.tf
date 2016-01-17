@@ -119,7 +119,7 @@ module "ec2_instance_profile" {
     roles = "${var.ec2_instance_role_name}"
 }
 
-module "launch-configuration" {
+module "scheduled_launch_configuration" {
     source = "aws/launch-configuration"
     name = "${var.launch_configuration_name}"
     image_id = "${lookup(var.aws_amis, var.aws_region)}"
@@ -129,5 +129,29 @@ module "launch-configuration" {
     security_groups = "${module.null_security_group.id}"
     ebs_optimized = false
     user_data = "${file( var.server_user_data )}" 
+}
+
+module "scheduled_scaling_group" {
+    source = "aws/auto-scaling/scheduled"
+    name = "Work Hours Only"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+    max_size = 6
+    min_size = 1
+    desired_capacity = 3
+
+    up_name = "Spin-Up Schedule"
+    up_min_size = 1 
+    up_max_size = 6 
+    up_desired_capacity = 3
+
+    down_name = "Spin-Down Schedule"
+    down_min_size = 0 
+    down_max_size = 1 
+    down_desired_capacity = 0
+
+    subnet_ids = "${split(",", module.vpc.subnet_ids)}"
+    launch_configuration_name = "${var.launch_configuration_name}"
 }
 
