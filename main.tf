@@ -69,8 +69,12 @@ variable "aws_amis" {
     }
 }
 
+variable "ecs_instance_role_name" {
+    default = "ecs-instance-role" 
+}
+
 variable "ec2_instance_role_name" {
-    default = "ec2-instances-role" 
+    default = "ec2-instance-role" 
 }
 
 # ------------ resources -------------------
@@ -113,10 +117,36 @@ module "ec2_role" {
     policy_path = "policies/allow-role-assumption.json"
 }
 
+module "ecs_role" {
+    source = "aws/iam/role"
+    name = "${var.ecs_instance_role_name}"
+    policy_path = "policies/ecs-role.json"
+}
+
 module "ec2_instance_profile" {
     source = "aws/iam/instance-profile"
-    name = "ec2-instances-profile"
+    name = "ec2-instance-profile"
     roles = "${var.ec2_instance_role_name}"
+}
+
+module "ecs_instance_profile" {
+    source = "aws/iam/instance-profile"
+    name = "ecs-instance-profile"
+    roles = "${var.ecs_instance_role_name}"
+}
+
+module "ecs_scheduler_policy" {
+    source = "aws/iam/role-policy"
+    name = "ecs-scheduler-policy"
+    policy_path = "policies/ecs-scheduler-policy.json"
+    role = "${var.ecs_instance_role_name}"
+}
+
+module "ecs_instance_policy" {
+    source = "aws/iam/role-policy"
+    name = "ecs-instance-policy"
+    policy_path = "policies/ecs-instance-policy.json"
+    role = "${var.ecs_instance_role_name}"
 }
 
 module "scheduled_launch_configuration" {
@@ -183,3 +213,16 @@ module "load_balancer" {
     purpose = "${var.purpose}"
     managed_by = "${var.managed_by}"
 }
+
+module "balanced-service" {
+    source = "aws/container-service/balanced-service"
+    name = "balanced-service"
+    role = "${module.ecs_role.id}"
+    desired_count = "1"
+    task = "${module.task.id}"
+    elb = "${module.load_balancer.name}"
+    cluster = "${module.cluster.id}"
+    container_name = "jenkins"
+    container_port = "80"
+}
+
