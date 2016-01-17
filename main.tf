@@ -173,3 +173,13 @@ module "unbalanced_service" {
     task = "${module.task.id}"
     cluster = "${module.cluster.id}"
 }
+
+module "load_balancer" {
+    source = "aws/load-balancers/insecure-web"
+    subnets = "${split(",", module.vpc.subnet_ids)}"
+    security_groups = "${module.null_security_group.id}"
+    name = "insecure-web-balancer"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+}
