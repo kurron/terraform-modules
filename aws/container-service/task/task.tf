@@ -5,16 +5,16 @@ variable "family" {
 }
 
 variable "definition" {
-    description = "A list of container definitions in JSON format."
+    description = "The path to the list of container definitions in JSON format."
 }
 
 # ------------ resources ----------------------
 
 resource "aws_ecs_task_definition" "task" {
     family = "${var.family}"
-    container_definitions = "${var.definition}"
+    container_definitions = "${file( var.definition )}"
 
-    lifecycle { create_before_destroy = true }
+#   lifecycle { create_before_destroy = true }
 }
 
 # ------------ outputs ----------------------

@@ -160,3 +160,9 @@ module "cluster" {
     name = "container-cluster"
 }
 
+module "task" {
+    source = "aws/container-service/task"
+    family = "example-containers"
+    definition = "task-definitions/example.json"
+}
+
