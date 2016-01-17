@@ -14,7 +14,6 @@ variable "task" {
 
 variable "desired_count" {
     description = "The number of instances of the task definition to place and keep running."
-    value = "1"
 }
 
 # ------------ resources ----------------------

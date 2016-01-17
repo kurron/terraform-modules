@@ -166,3 +166,10 @@ module "task" {
     definition = "task-definitions/example.json"
 }
 
+module "unbalanced_service" {
+    source = "aws/container-service/unbalanced-service"
+    name = "unbalanced-service"
+    desired_count = "1"
+    task = "${module.task.id}"
+    cluster = "${module.cluster.id}"
+}
