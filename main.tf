@@ -183,6 +183,8 @@ module "scheduled_scaling_group" {
 
     subnet_ids = "${split(",", module.vpc.subnet_ids)}"
     launch_configuration_name = "${var.launch_configuration_name}"
+
+    schedule_start = "2016-12-31T00:00:00Z"
 }
 
 module "cluster" {
