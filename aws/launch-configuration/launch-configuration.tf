@@ -53,7 +53,8 @@ variable "enable_monitoring" {
 # ------------ resources ----------------------
 
 resource "aws_launch_configuration" "alc" {
-    name = "${var.name}"
+# letting Terraform pick a name makes it easier to replace an existing configuration
+#   name = "${var.name}"
     image_id = "${var.image_id}"
     instance_type = "${var.instance_type}"
     iam_instance_profile = "${var.instance_profile}"
@@ -68,7 +69,7 @@ resource "aws_launch_configuration" "alc" {
 #   ebs_block_device = ???
 #   ephemeral_block_device = ???
 
-#   lifecycle { create_before_destroy = true }
+    lifecycle { create_before_destroy = true }
 }
 
 # ------------ outputs ----------------------
