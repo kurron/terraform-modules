@@ -111,7 +111,11 @@ variable "down_cron" {
     default = "0 17 1-31 1-12 1-7"
 }
 
-variable "schedule_start" {
+variable "temporary_up" {
+    description = "Temporarily required until the next release of Terraform."
+}
+
+variable "temporary_down" {
     description = "Temporarily required until the next release of Terraform."
 }
 
@@ -173,7 +177,7 @@ resource "aws_autoscaling_schedule" "up" {
     autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 
     # necessary until the next release of Terraform
-    start_time = "${var.schedule_start}" 
+    start_time = "${var.temporary_up}" 
     end_time = "2016-12-31T00:00:00Z" 
 }
 
@@ -186,7 +190,7 @@ resource "aws_autoscaling_schedule" "down" {
     autoscaling_group_name = "${aws_autoscaling_group.aag.name}"
 
     # necessary until the next release of Terraform
-    start_time = "${var.schedule_start}" 
+    start_time = "${var.temporary_down}" 
     end_time = "2016-11-31T00:00:00Z" 
 }
 
