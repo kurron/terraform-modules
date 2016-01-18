@@ -158,7 +158,7 @@ module "scheduled_launch_configuration" {
     key_name = "${var.key_name}"
     security_groups = "${module.null_security_group.id}"
     ebs_optimized = false
-    user_data = "${file( var.server_user_data )}" 
+    user_data = "${var.server_user_data}" 
 }
 
 module "scheduled_scaling_group" {
@@ -227,5 +227,22 @@ module "balanced-service" {
     cluster = "${module.cluster.id}"
     container_name = "jenkins"
     container_port = "80"
+}
+
+module "well_known_instance" {
+    source = "aws/instance/well-known"
+    name = "Examplle Well Known"
+    realm = "${var.realm}"
+    purpose = "${var.purpose}"
+    managed_by = "${var.managed_by}"
+
+    image_id = "${lookup(var.aws_amis, var.aws_region)}"
+    instance_type = "t2.nano"
+    key_name = "${var.key_name}"
+    security_groups = "${module.null_security_group.id}"
+    ebs_optimized = false
+    user_data = "${var.server_user_data}"
+    private_ip = "10.0.10.1"
+    subnet_id = "${element( split(",", module.vpc.subnet_ids), 0 )}"
 }
 
