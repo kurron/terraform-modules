@@ -77,7 +77,7 @@ resource "aws_instance" "instance" {
     monitoring = "${var.enable_monitoring}"
     vpc_security_group_ids = ["${var.security_groups}"]
     subnet_id = "${var.subnet_id}"
-    associate_public_ip_address = "${associate_public_ip}"
+    associate_public_ip_address = "${var.associate_public_ip}"
     private_ip ="${var.private_ip}"
     source_dest_check = true
     user_data = "${file( var.user_data )}"
