@@ -1,5 +1,5 @@
 terraform {
-    required_version = ">= 0.9.0"
+    required_version = ">= 0.9.2"
 }
 
 variable "name" {
@@ -36,12 +36,23 @@ variable "region" {
 }
 
 variable "cidr" {
-      description = "The CIDR block to provision for the VPC"
-      default = "10.0.0.0/24"
+    description = "The CIDR block to provision for the VPC"
+    default = "10.0.0.0/24"
 }
 
 module "defaults" {
     source = "./aws/defaults"
     region = "${var.region}"
+    cidr   = "${var.cidr}"
+}
+
+module "vpc" {
+    source = "./aws/vpc"
+    name   = "${var.name}"
+    project   = "${var.project}"
+    purpose   = "${var.purpose}"
+    creator   = "${var.creator}"
+    environment   = "${var.environment}"
+    freetext   = "${var.freetext}"
     cidr   = "${var.cidr}"
 }
