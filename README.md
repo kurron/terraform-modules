@@ -1,5 +1,6 @@
 # Overview
-This project is a library of [Terraform](http://terraform.io/) modules.
+This project is a library of [Terraform](http://terraform.io/) modules. Inspired by 
+[The Segment AWS Stack](https://github.com/segmentio/stack).
 
 # Prerequisites
 * a working [Terraform](http://terraform.io) installation
