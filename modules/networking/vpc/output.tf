@@ -37,3 +37,8 @@ output "vpc_private_subnet_ids" {
     value = ["${aws_subnet.private.*.id}"]
     description = "IDs of the VPC's private subnets"
 }
+
+output "vpc_availability_zones" {
+    value = ["${aws_subnet.public.*.availability_zone}"]
+    description = "AZs the VPC has subnets in"
+}
