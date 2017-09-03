@@ -27,13 +27,29 @@ resource "aws_subnet" "public" {
     cidr_block              = "${element( var.public_subnets, count.index )}"
     vpc_id                  = "${aws_vpc.main.id}"
     map_public_ip_on_launch = true
-    count                   = "${length( data.aws_availability_zones.available.names )}"
+    count                   = "${length( var.public_subnets )}"
     tags {
         Name        = "${var.name} ${format( "Public %02d", count.index+1 )}"
         Project     = "${var.project}"
-        Purpose     = "To handle any direct connections from the internet"
+        Purpose     = "House instances that can be contacted directly from the internet"
         Creator     = "${var.creator}"
         Environment = "${var.environment}"
         Freetext    = "Allows for incoming traffic from the internet"
+    }
+}
+
+resource "aws_subnet" "private" {
+    availability_zone       = "${element( data.aws_availability_zones.available.names, count.index )}"
+    cidr_block              = "${element( var.private_subnets, count.index )}"
+    vpc_id                  = "${aws_vpc.main.id}"
+    map_public_ip_on_launch = false
+    count                   = "${length( var.private_subnets )}"
+    tags {
+        Name        = "${var.name} ${format( "Private %02d", count.index+1 )}"
+        Project     = "${var.project}"
+        Purpose     = "House instances that shouldn't be contacted directly from the internet"
+        Creator     = "${var.creator}"
+        Environment = "${var.environment}"
+        Freetext    = "Direct connections from the internet are allowed"
     }
 }
