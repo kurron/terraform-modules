@@ -8,10 +8,6 @@ provider "aws" {
     region     = "${var.region}"
 }
 
-data "aws_availability_zones" "available" {
-    state = "available"
-}
-
 data "aws_ami" "amazon_linux_ami" {
     most_recent      = true
     name_regex = "amzn-ami-hvm-*"

@@ -1,5 +1,4 @@
 #source = "git::git@github.com:foo/modules.git//frontend-app?ref=v0.0.3"
-source = "/home/vagrant/GitHub/terraform-modules/modules/networking/vpc"
 
 region = "us-west-2"
 public_subnets = ["10.0.2.0/24", "10.0.4.0/24"]
