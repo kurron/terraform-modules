@@ -54,3 +54,15 @@ variable "freetext" {
     description = "Information that does not fit in the other tags"
     default = "No notes at this time"
 }
+
+variable "public_subnets" {
+    description = "List of public subnets"
+    type        = "list"
+    default     = ["10.0.2.0/24", "10.0.4.0/24", "10.0.6.0/24", "10.0.8.0/24"]
+}
+
+variable "private_subnets" {
+    description = "List of private subnets"
+    type        = "list"
+    default     = ["10.0.1.0/24", "10.0.3.0/24"]
+}
