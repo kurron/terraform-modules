@@ -11,11 +11,22 @@ data "aws_availability_zones" "available" {
 resource "aws_vpc" "main" {
     cidr_block           = "${var.cidr_range}"
     enable_dns_hostnames = true
-
     tags {
         Name        = "${var.name}"
         Project     = "${var.project}"
         Purpose     = "${var.purpose}"
+        Creator     = "${var.creator}"
+        Environment = "${var.environment}"
+        Freetext    = "${var.freetext}"
+    }
+}
+
+resource "aws_internet_gateway" "main" {
+    vpc_id = "${aws_vpc.main.id}"
+    tags {
+        Name        = "${var.name}"
+        Project     = "${var.project}"
+        Purpose     = "Routes traffic from the internet to the public subnets"
         Creator     = "${var.creator}"
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
