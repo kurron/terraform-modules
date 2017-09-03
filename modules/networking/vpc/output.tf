@@ -27,3 +27,13 @@ output "vpc_default_route_table_id" {
     value = "${aws_vpc.main.default_route_table_id}"
     description = "ID of the VPC's default route table"
 }
+
+output "vpc_public_subnet_ids" {
+    value = ["${aws_subnet.public.*.id}"]
+    description = "IDs of the VPC's public subnets"
+}
+
+output "vpc_private_subnet_ids" {
+    value = ["${aws_subnet.private.*.id}"]
+    description = "IDs of the VPC's private subnets"
+}
