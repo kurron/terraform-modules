@@ -66,3 +66,14 @@ variable "freetext" {
     description = "Information that does not fit in the other tags"
     default = "No notes at this time"
 }
+
+variable "instance_type" {
+    type = "string"
+    description = "Instance type to make the Bastion host from"
+    default = "t2.nano"
+}
+
+variable "ssh_key_name" {
+    type = "string"
+    description = "Name of the SSH key pair to use when logging into the bastion host"
+}

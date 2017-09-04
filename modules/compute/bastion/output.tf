@@ -12,3 +12,13 @@ output "security_group_name" {
     value = "${aws_security_group.ssh_only.name}"
     description = "Name of the SSH security group"
 }
+
+output "launch_configuration_id" {
+    value = "${aws_launch_configuration.bastion.id}"
+    description = "ID of the Bastion's launch configuration"
+}
+
+output "launch_configuration_name" {
+    value = "${aws_launch_configuration.bastion.name}"
+    description = "Name of the Bastion's launch configuration"
+}

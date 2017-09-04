@@ -73,3 +73,16 @@ resource "aws_security_group" "ssh_only" {
         Freetext    = "No notes yet."
     }
 }
+
+resource "aws_launch_configuration" "bastion" {
+    name_prefix   = "bastion-"
+    image_id      = "${data.aws_ami.amazon_linux_ami.id}"
+    instance_type = "${var.instance_type}"
+    key_name = "${var.ssh_key_name}"
+    security_groups = ["${aws_security_group.ssh_only.id}"]
+    associate_public_ip_address = true
+    enable_monitoring = true
+    lifecycle {
+        create_before_destroy = true
+    }
+}
