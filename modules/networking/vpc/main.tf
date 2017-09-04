@@ -1,6 +1,6 @@
 terraform {
-  required_version = ">= 0.10.3"
-  backend "s3" {}
+    required_version = ">= 0.10.3"
+    backend "s3" {}
 }
 
 provider "aws" {
@@ -130,11 +130,4 @@ resource "aws_route_table_association" "private" {
     count          = "${length( var.private_subnets )}"
     subnet_id      = "${element( aws_subnet.private.*.id, count.index) }"
     route_table_id = "${element( aws_route_table.private.*.id, count.index) }"
-}
-
-module "bastion" {
-    source  = "../../compute/bastion"
-    aws_access_key = "${var.aws_access_key}"
-    aws_secret_key = "${var.aws_secret_key}"
-    region     = "${var.region}"
 }
