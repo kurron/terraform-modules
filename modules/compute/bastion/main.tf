@@ -47,3 +47,29 @@ data "aws_ami" "amazon_linux_ami" {
        values = ["ebs"]
     }
 }
+
+resource "aws_security_group" "ssh_only" {
+    name        = "SSH Only"
+    description = "Allow only inbound SSH traffic"
+    vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
+    egress {
+        from_port   = 22
+        to_port     = 22
+        protocol    = "tcp"
+        cidr_blocks = ["${data.terraform_remote_state.vpc.vpc_cidr}"]
+    }
+    ingress {
+        from_port   = 22
+        to_port     = 22
+        protocol    = "tcp"
+        cidr_blocks = ["98.216.147.13/32"]
+    }
+    tags {
+        Name        = "SSH Only"
+        Project     = "${var.project}"
+        Purpose     = "Restrict SSH traffic to specific ip ranges"
+        Creator     = "${var.creator}"
+        Environment = "${var.environment}"
+        Freetext    = "No notes yet."
+    }
+}
