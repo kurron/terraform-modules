@@ -19,6 +19,24 @@ variable "name" {
     default = "Experiment"
 }
 
+variable "vpc_bucket" {
+    type = "string"
+    description = "S3 bucket containing the VPC Terraform state"
+    default = "transparent-terraform-state"
+}
+
+variable "vpc_key" {
+    type = "string"
+    description = "S3 key pointing to the VPC Terraform state"
+    default = "development/networking/vpc/terraform.tfstate"
+}
+
+variable "vpc_region" {
+    type = "string"
+    description = "Region where the S3 bucket containing the VPC Terraform state is located"
+    default = "us-east-1"
+}
+
 variable "project" {
     type = "string"
     description = "Name of the project this instance is being created for"

@@ -9,6 +9,15 @@ provider "aws" {
     region     = "${var.region}"
 }
 
+data "terraform_remote_state" "vpc" {
+    backend = "s3"
+    config {
+        bucket = "${var.vpc_bucket}"
+        key    = "${var.vpc_key}"
+        region = "${var.vpc_region}"
+    }
+}
+
 data "aws_ami" "amazon_linux_ami" {
     most_recent      = true
     name_regex = "amzn-ami-hvm-*"
