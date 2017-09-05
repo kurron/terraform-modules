@@ -104,6 +104,12 @@ variable "health_check_grace_period" {
 
 variable "desired_capacity" {
     type = "string"
-    description = " The number of Amazon EC2 instances that should be running in the group."
+    description = "The number of Amazon EC2 instances that should be running in the group."
     default = "1"
+}
+
+variable "ssh_ingress_cidr_blocks" {
+    type = "list"
+    description = "IP ranges to allows inbound SSH access to"
+    default = ["98.216.147.13/32"]
 }

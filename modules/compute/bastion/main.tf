@@ -62,7 +62,7 @@ resource "aws_security_group" "ssh_only" {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["98.216.147.13/32"]
+        cidr_blocks = "${var.ssh_ingress_cidr_blocks}"
     }
     tags {
         Name        = "SSH Only"
