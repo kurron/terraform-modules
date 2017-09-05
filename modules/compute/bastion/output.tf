@@ -22,3 +22,13 @@ output "launch_configuration_name" {
     value = "${aws_launch_configuration.bastion.name}"
     description = "Name of the Bastion's launch configuration"
 }
+
+output "auto_scaling_group_id" {
+    value = "${aws_autoscaling_group.bastion.id}"
+    description = "ID of the Bastion's auto scaling group"
+}
+
+output "auto_scaling_group_name" {
+    value = "${aws_autoscaling_group.bastion.name}"
+    description = "Name of the Bastion's auto scaling group"
+}

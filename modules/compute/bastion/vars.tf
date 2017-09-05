@@ -77,3 +77,33 @@ variable "ssh_key_name" {
     type = "string"
     description = "Name of the SSH key pair to use when logging into the bastion host"
 }
+
+variable "max_size" {
+    type = "string"
+    description = "Maximum number of bastion instances that can be run simultaneously"
+    default = "2"
+}
+
+variable "min_size" {
+    type = "string"
+    description = "Minimum number of bastion instances that can be run simultaneously"
+    default = "1"
+}
+
+variable "cooldown" {
+    type = "string"
+    description = "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start."
+    default = "60"
+}
+
+variable "health_check_grace_period" {
+    type = "string"
+    description = "Time (in seconds) after instance comes into service before checking health."
+    default = "300"
+}
+
+variable "desired_capacity" {
+    type = "string"
+    description = " The number of Amazon EC2 instances that should be running in the group."
+    default = "1"
+}
