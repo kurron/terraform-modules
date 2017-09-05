@@ -134,3 +134,21 @@ resource "aws_autoscaling_group" "bastion" {
         propagate_at_launch = true
     }
 }
+
+resource "aws_autoscaling_schedule" "scale_up" {
+    autoscaling_group_name = "${aws_autoscaling_group.bastion.name}"
+    scheduled_action_name  = "Scale Up"
+    recurrence             = "${var.scale_up_cron}"
+    min_size               = "${var.min_size}"
+    max_size               = "${var.max_size}"
+    desired_capacity       = "${var.desired_capacity}"
+}
+
+resource "aws_autoscaling_schedule" "scale_down" {
+    autoscaling_group_name = "${aws_autoscaling_group.bastion.name}"
+    scheduled_action_name  = "Scale Down"
+    recurrence             = "${var.scale_down_cron}"
+    min_size               = "${var.scaled_down_min_size}"
+    max_size               = "${var.max_size}"
+    desired_capacity       = "${var.scale_down_desired_capacity}"
+}

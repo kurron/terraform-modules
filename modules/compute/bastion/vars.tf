@@ -108,8 +108,32 @@ variable "desired_capacity" {
     default = "1"
 }
 
+variable "scale_down_desired_capacity" {
+    type = "string"
+    description = "The number of Amazon EC2 instances that should be running when scaling down."
+    default = "0"
+}
+
+variable "scaled_down_min_size" {
+    type = "string"
+    description = "Minimum number of bastion instances that can be running when scaling down"
+    default = "0"
+}
+
 variable "ssh_ingress_cidr_blocks" {
     type = "list"
     description = "IP ranges to allows inbound SSH access to"
     default = ["98.216.147.13/32"]
+}
+
+variable "scale_up_cron" {
+    type = "string"
+    description = "In UTC, when to scale up the bastion servers"
+    default = "0 2 * * *"
+}
+
+variable "scale_down_cron" {
+    type = "string"
+    description = "In UTC, when to scale down the bastion servers"
+    default = "0 14 * * *"
 }
