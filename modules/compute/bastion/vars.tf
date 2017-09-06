@@ -129,11 +129,11 @@ variable "ssh_ingress_cidr_blocks" {
 variable "scale_up_cron" {
     type = "string"
     description = "In UTC, when to scale up the bastion servers"
-    default = "0 6 * * *"
+    default = "0 12 * * *"
 }
 
 variable "scale_down_cron" {
     type = "string"
     description = "In UTC, when to scale down the bastion servers"
-    default = "0 18 * * *"
+    default = "0 0 * * *"
 }
