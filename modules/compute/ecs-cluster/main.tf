@@ -25,3 +25,33 @@ resource "aws_ecs_cluster" "main" {
         create_before_destroy = true
     }
 }
+
+data "aws_ami" "ecs_ami" {
+    most_recent = true
+    name_regex  = "^amzn-ami-.*amazon-ecs-optimized$"
+    owners      = ["amazon"]
+    filter {
+       name   = "architecture"
+       values = ["x86_64"]
+    }
+    filter {
+       name   = "image-type"
+       values = ["machine"]
+    }
+    filter {
+       name   = "state"
+       values = ["available"]
+    }
+    filter {
+       name   = "virtualization-type"
+       values = ["hvm"]
+    }
+    filter {
+       name   = "hypervisor"
+       values = ["xen"]
+    }
+    filter {
+       name   = "root-device-type"
+       values = ["ebs"]
+    }
+}
