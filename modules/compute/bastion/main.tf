@@ -51,12 +51,12 @@ data "aws_ami" "amazon_linux_ami" {
 resource "aws_security_group" "ssh_only" {
     name        = "SSH Only"
     description = "Allow only inbound SSH traffic"
-    vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
+    vpc_id = "${data.terraform_remote_state.vpc.id}"
     egress {
         from_port   = 22
         to_port     = 22
         protocol    = "tcp"
-        cidr_blocks = ["${data.terraform_remote_state.vpc.vpc_cidr}"]
+        cidr_blocks = ["${data.terraform_remote_state.vpc.cidr}"]
     }
     ingress {
         from_port   = 22
@@ -91,13 +91,13 @@ resource "aws_autoscaling_group" "bastion" {
     name_prefix               = "Bastion-"
     max_size                  = "${var.max_size}"
     min_size                  = "${var.min_size}"
-    availability_zones        = ["${data.terraform_remote_state.vpc.vpc_availability_zones}"]
+    availability_zones        = ["${data.terraform_remote_state.vpc.availability_zones}"]
     default_cooldown          = "${var.cooldown}"
     launch_configuration      = "${aws_launch_configuration.bastion.name}"
     health_check_grace_period = "${var.health_check_grace_period }"
     health_check_type         = "EC2"
     desired_capacity          = "${var.desired_capacity}"
-    vpc_zone_identifier       = ["${data.terraform_remote_state.vpc.vpc_public_subnet_ids}"]
+    vpc_zone_identifier       = ["${data.terraform_remote_state.vpc.public_subnet_ids}"]
     termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
     enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
     lifecycle {
@@ -105,7 +105,7 @@ resource "aws_autoscaling_group" "bastion" {
     }
     tag {
         key                 = "Name"
-        value               = "Bastion"
+        value               = "${var.name}"
         propagate_at_launch = true
     }
     tag {

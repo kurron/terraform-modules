@@ -1,44 +1,44 @@
-output "vpc_id" {
+output "id" {
     value = "${aws_vpc.main.id}"
     description = "ID of the generated VPC"
 }
 
-output "vpc_cidr" {
+output "cidr" {
     value = "${aws_vpc.main.cidr_block}"
     description = "The VPC's network range expressed in CIDR notation"
 }
 
-output "vpc_main_route_table_id" {
+output "main_route_table_id" {
     value = "${aws_vpc.main.main_route_table_id}"
     description = "ID of the VPC's main route table"
 }
 
-output "vpc_default_network_acl_id" {
+output "default_network_acl_id" {
     value = "${aws_vpc.main.default_network_acl_id}"
     description = "ID of the VPC's default network ACL"
 }
 
-output "vpc_default_security_group_id" {
+output "default_security_group_id" {
     value = "${aws_vpc.main.default_security_group_id}"
     description = "ID of the VPC's default security group"
 }
 
-output "vpc_default_route_table_id" {
+output "default_route_table_id" {
     value = "${aws_vpc.main.default_route_table_id}"
     description = "ID of the VPC's default route table"
 }
 
-output "vpc_public_subnet_ids" {
+output "public_subnet_ids" {
     value = ["${aws_subnet.public.*.id}"]
     description = "IDs of the VPC's public subnets"
 }
 
-output "vpc_private_subnet_ids" {
+output "private_subnet_ids" {
     value = ["${aws_subnet.private.*.id}"]
     description = "IDs of the VPC's private subnets"
 }
 
-output "vpc_availability_zones" {
+output "availability_zones" {
     value = ["${aws_subnet.public.*.availability_zone}"]
     description = "AZs the VPC has subnets in"
 }
