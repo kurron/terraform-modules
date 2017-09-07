@@ -51,7 +51,7 @@ data "aws_ami" "amazon_linux_ami" {
 resource "aws_security_group" "ssh_only" {
     name        = "SSH Only"
     description = "Allow only inbound SSH traffic"
-    vpc_id = "${data.terraform_remote_state.vpc.id}"
+    vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
     egress {
         from_port   = 22
         to_port     = 22
@@ -67,10 +67,10 @@ resource "aws_security_group" "ssh_only" {
     tags {
         Name        = "SSH Only"
         Project     = "${var.project}"
-        Purpose     = "Restrict SSH traffic to specific ip ranges"
+        Purpose     = "${var.purpose}"
         Creator     = "${var.creator}"
         Environment = "${var.environment}"
-        Freetext    = "No notes yet."
+        Freetext    = "${var.freetext}"
     }
 }
 
@@ -115,7 +115,7 @@ resource "aws_autoscaling_group" "bastion" {
     }
     tag {
         key                 = "Purpose"
-        value               = "Ensure we always have a way to SSH into private instances"
+        value               = "${var.purpose}"
         propagate_at_launch = true
     }
     tag {
@@ -130,7 +130,7 @@ resource "aws_autoscaling_group" "bastion" {
     }
     tag {
         key                 = "Freetext"
-        value               = "Should we set some scaling policies?"
+        value               = "${var.freetext}"
         propagate_at_launch = true
     }
 }
@@ -148,7 +148,7 @@ resource "aws_autoscaling_schedule" "scale_down" {
     autoscaling_group_name = "${aws_autoscaling_group.bastion.name}"
     scheduled_action_name  = "Scale Down"
     recurrence             = "${var.scale_down_cron}"
-    min_size               = "${var.scaled_down_min_size}"
+    min_size               = "${var.scale_down_min_size}"
     max_size               = "${var.max_size}"
     desired_capacity       = "${var.scale_down_desired_capacity}"
 }

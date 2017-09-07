@@ -1,4 +1,5 @@
-output "id" {
+# using just id as the value causes downstream modules to get the wrong data
+output "vpc_id" {
     value = "${aws_vpc.main.id}"
     description = "ID of the generated VPC"
 }

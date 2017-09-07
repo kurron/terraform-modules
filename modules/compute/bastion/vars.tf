@@ -114,7 +114,7 @@ variable "scale_down_desired_capacity" {
     default = "0"
 }
 
-variable "scaled_down_min_size" {
+variable "scale_down_min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be running when scaling down"
     default = "0"
