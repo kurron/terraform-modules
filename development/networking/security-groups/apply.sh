@@ -1,5 +1,5 @@
 #!/bin/bash
 
-APPLY="terraform apply -refresh=true -input=false -var-file=security-groups.tfvars ../../../modules/networking/security-groups/"
+APPLY="terraform apply -refresh=true -input=false proposed-changes.plan"
 echo ${APPLY}
 ${APPLY}
