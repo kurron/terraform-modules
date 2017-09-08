@@ -1,5 +1,5 @@
 #!/bin/bash
 
-APPLY="terraform apply -refresh=true -input=false -var-file=bastion.tfvars ../../../modules/compute/bastion/"
+APPLY="terraform apply -refresh=true -input=false proposed-changes.plan"
 echo ${APPLY}
 ${APPLY}
