@@ -27,3 +27,13 @@ output "alb_name" {
     value = "${aws_security_group.alb_access.name}"
     description = "Name of the Application Load Balancer security group"
 }
+
+output "ec2_id" {
+    value = "${aws_security_group.ec2_access.id}"
+    description = "ID of the EC2 security group"
+}
+
+output "ec2_name" {
+    value = "${aws_security_group.ec2_access.name}"
+    description = "Name of the EC2 security group"
+}

@@ -59,3 +59,17 @@ resource "aws_security_group" "alb_access" {
         Freetext    = "${var.freetext}"
     }
 }
+
+resource "aws_security_group" "ec2_access" {
+    name_prefix = "ec2-"
+    description = "Controls access to the EC2 instances"
+    vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
+    tags {
+        Name        = "EC2 Access"
+        Project     = "${var.project}"
+        Purpose     = "Controls access to the EC2 instances"
+        Creator     = "${var.creator}"
+        Environment = "${var.environment}"
+        Freetext    = "${var.freetext}"
+    }
+}
