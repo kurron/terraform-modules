@@ -99,3 +99,15 @@ resource "aws_security_group_rule" "bastion_ingress" {
         create_before_destroy = true
     }
 }
+
+resource "aws_security_group_rule" "ec2_ingress" {
+    type                     = "ingress"
+    from_port                = 0
+    protocol                 = "all"
+    security_group_id        = "${aws_security_group.ec2_access.id}"
+    source_security_group_id = "${aws_security_group.bastion_access.id}"
+    to_port                  = 65535
+    lifecycle {
+        create_before_destroy = true
+    }
+}
