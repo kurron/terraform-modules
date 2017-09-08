@@ -18,6 +18,15 @@ data "terraform_remote_state" "vpc" {
     }
 }
 
+data "terraform_remote_state" "security-groups" {
+    backend = "s3"
+    config {
+        bucket = "${var.security_groups_bucket}"
+        key    = "${var.security_groups_key}"
+        region = "${var.security_groups_region}"
+    }
+}
+
 data "aws_ami" "amazon_linux_ami" {
     most_recent      = true
     name_regex = "amzn-ami-hvm-*"
