@@ -18,11 +18,21 @@ data "terraform_remote_state" "vpc" {
     }
 }
 
-resource "aws_ecs_cluster" "main" {
-    name = "${var.cluster_name}"
+data "terraform_remote_state" "security-groups" {
+    backend = "s3"
+    config {
+        bucket = "${var.security_groups_bucket}"
+        key    = "${var.security_groups_key}"
+        region = "${var.security_groups_region}"
+    }
+}
 
-    lifecycle {
-        create_before_destroy = true
+data "terraform_remote_state" "iam" {
+    backend = "s3"
+    config {
+        bucket = "${var.iam_bucket}"
+        key    = "${var.iam_key}"
+        region = "${var.iam_region}"
     }
 }
 
@@ -53,5 +63,46 @@ data "aws_ami" "ecs_ami" {
     filter {
        name   = "root-device-type"
        values = ["ebs"]
+    }
+}
+
+resource "aws_ecs_cluster" "main" {
+    name = "${var.cluster_name}"
+
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+data "template_file" "ecs_cloud_config" {
+    template = "${file("${path.module}/cloud-config.yml.template")}"
+    vars {
+        cluster_name      = "${aws_ecs_cluster.main.name}"
+    }
+}
+
+data "template_cloudinit_config" "cloud_config" {
+    gzip          = false
+    base64_encode = false
+    part {
+        content_type = "text/cloud-config"
+        content      = "${data.template_file.ecs_cloud_config.rendered}"
+    }
+}
+
+resource "aws_launch_configuration" "worker" {
+    name_prefix                 = "worker-${var.project}-"
+    image_id                    = "${data.aws_ami.ecs_ami.id}"
+    instance_type               = "${var.instance_type}"
+    iam_instance_profile        = "${data.terraform_remote_state.iam.profile}"
+    key_name                    = "${var.ssh_key_name}"
+    security_groups             = ["${data.terraform_remote_state.security-groups.ec2_id}"]
+    user_data                   = "${data.template_cloudinit_config.cloud_config.rendered}"
+    associate_public_ip_address = false
+    enable_monitoring           = true
+    ebs_optimized               = "${var.ebs_optimized}"
+    spot_price                  = "${var.spot_price}"
+    lifecycle {
+        create_before_destroy = true
     }
 }

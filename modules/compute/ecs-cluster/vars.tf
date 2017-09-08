@@ -37,6 +37,42 @@ variable "vpc_region" {
     default = "us-east-1"
 }
 
+variable "security_groups_bucket" {
+    type = "string"
+    description = "S3 bucket containing the security groups Terraform state"
+    default = "transparent-terraform-state"
+}
+
+variable "security_groups_key" {
+    type = "string"
+    description = "S3 key pointing to the security groups Terraform state"
+    default = "development/networking/security-groups/terraform.tfstate"
+}
+
+variable "security_groups_region" {
+    type = "string"
+    description = "Region where the S3 bucket containing the security groups Terraform state is located"
+    default = "us-east-1"
+}
+
+variable "iam_bucket" {
+    type = "string"
+    description = "S3 bucket containing the IAM Terraform state"
+    default = "transparent-terraform-state"
+}
+
+variable "iam_key" {
+    type = "string"
+    description = "S3 key pointing to the IAM Terraform state"
+    default = "development/security/iam/terraform.tfstate"
+}
+
+variable "iam_region" {
+    type = "string"
+    description = "Region where the S3 bucket containing the IAM Terraform state is located"
+    default = "us-east-1"
+}
+
 variable "project" {
     type = "string"
     description = "Name of the project this instance is being created for"
@@ -70,7 +106,6 @@ variable "freetext" {
 variable "instance_type" {
     type = "string"
     description = "Instance type to make the Bastion host from"
-    default = "t2.nano"
 }
 
 variable "ssh_key_name" {
@@ -136,4 +171,15 @@ variable "scale_down_cron" {
     type = "string"
     description = "In UTC, when to scale down the bastion servers"
     default = "0 0 * * *"
+}
+
+variable "spot_price" {
+    type = "string"
+    description = "The cost per hour you are willing to pay for a spot instance."
+}
+
+variable "ebs_optimized" {
+    type = "string"
+    description = " If true, the launched EC2 instance will be EBS-optimized."
+    default = false
 }
