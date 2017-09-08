@@ -66,3 +66,9 @@ variable "freetext" {
     description = "Information that does not fit in the other tags"
     default = "No notes at this time"
 }
+
+variable "bastion_ingress_cidr_blocks" {
+    type = "list"
+    description = "IP ranges to allows inbound SSH access to"
+    default = ["98.216.147.13/32"]
+}

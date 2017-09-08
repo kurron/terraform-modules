@@ -138,12 +138,6 @@ variable "scale_down_min_size" {
     default = "0"
 }
 
-variable "ssh_ingress_cidr_blocks" {
-    type = "list"
-    description = "IP ranges to allows inbound SSH access to"
-    default = ["98.216.147.13/32"]
-}
-
 variable "scale_up_cron" {
     type = "string"
     description = "In UTC, when to scale up the bastion servers"

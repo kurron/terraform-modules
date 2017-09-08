@@ -30,6 +30,9 @@ resource "aws_security_group" "bastion_access" {
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
     }
+    lifecycle {
+        create_before_destroy = true
+    }
 }
 
 resource "aws_security_group" "api_gateway_access" {
@@ -43,6 +46,9 @@ resource "aws_security_group" "api_gateway_access" {
         Creator     = "${var.creator}"
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
+    }
+    lifecycle {
+        create_before_destroy = true
     }
 }
 
@@ -58,6 +64,9 @@ resource "aws_security_group" "alb_access" {
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
     }
+    lifecycle {
+        create_before_destroy = true
+    }
 }
 
 resource "aws_security_group" "ec2_access" {
@@ -71,5 +80,34 @@ resource "aws_security_group" "ec2_access" {
         Creator     = "${var.creator}"
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
+    }
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+# build the rules AFTER the empty security groups are constructed to avoid circular references
+
+resource "aws_security_group_rule" "bastion_ingress" {
+    type              = "ingress"
+    cidr_blocks       = "${var.bastion_ingress_cidr_blocks}"
+    from_port         = 22
+    protocol          = "tcp"
+    security_group_id = "${aws_security_group.bastion_access.id}"
+    to_port           = 22
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+resource "aws_security_group_rule" "bastion_egress" {
+    type                     = "egress"
+    from_port                = 22
+    protocol                 = "tcp"
+    security_group_id        = "${aws_security_group.bastion_access.id}"
+    source_security_group_id = "${aws_security_group.ec2_access.id}"
+    to_port                  = 22
+    lifecycle {
+        create_before_destroy = true
     }
 }

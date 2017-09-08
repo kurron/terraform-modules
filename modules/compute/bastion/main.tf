@@ -57,40 +57,14 @@ data "aws_ami" "amazon_linux_ami" {
     }
 }
 
-resource "aws_security_group" "ssh_only" {
-    name        = "SSH Only"
-    description = "Allow only inbound SSH traffic"
-    vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
-    egress {
-        from_port   = 22
-        to_port     = 22
-        protocol    = "tcp"
-        cidr_blocks = ["${data.terraform_remote_state.vpc.cidr}"]
-    }
-    ingress {
-        from_port   = 22
-        to_port     = 22
-        protocol    = "tcp"
-        cidr_blocks = "${var.ssh_ingress_cidr_blocks}"
-    }
-    tags {
-        Name        = "SSH Only"
-        Project     = "${var.project}"
-        Purpose     = "${var.purpose}"
-        Creator     = "${var.creator}"
-        Environment = "${var.environment}"
-        Freetext    = "${var.freetext}"
-    }
-}
-
 resource "aws_launch_configuration" "bastion" {
-    name_prefix   = "bastion-"
-    image_id      = "${data.aws_ami.amazon_linux_ami.id}"
-    instance_type = "${var.instance_type}"
-    key_name = "${var.ssh_key_name}"
-    security_groups = ["${aws_security_group.ssh_only.id}"]
+    name_prefix                 = "bastion-"
+    image_id                    = "${data.aws_ami.amazon_linux_ami.id}"
+    instance_type               = "${var.instance_type}"
+    key_name                    = "${var.ssh_key_name}"
+    security_groups             = ["${data.terraform_remote_state.security-groups.bastion_id}"]
     associate_public_ip_address = true
-    enable_monitoring = true
+    enable_monitoring           = true
     lifecycle {
         create_before_destroy = true
     }
