@@ -125,7 +125,7 @@ resource "aws_security_group_rule" "ec2_ingress" {
 }
 
 resource "aws_security_group_rule" "ec2_egress" {
-    type               = "ingress"
+    type               = "egress"
     cidr_blocks        = ["0.0.0.0/0"]
     from_port          = 0
     protocol           = "all"
