@@ -30,7 +30,6 @@ resource "aws_security_group" "bastion_access" {
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
     }
-
 }
 
 resource "aws_security_group" "api_gateway_access" {
@@ -45,5 +44,18 @@ resource "aws_security_group" "api_gateway_access" {
         Environment = "${var.environment}"
         Freetext    = "${var.freetext}"
     }
+}
 
+resource "aws_security_group" "alb_access" {
+    name_prefix = "alb-"
+    description = "Controls access to the Application Load Balancer"
+    vpc_id = "${data.terraform_remote_state.vpc.vpc_id}"
+    tags {
+        Name        = "Application Load Balancer Access"
+        Project     = "${var.project}"
+        Purpose     = "Controls access to the Application Load Balancer"
+        Creator     = "${var.creator}"
+        Environment = "${var.environment}"
+        Freetext    = "${var.freetext}"
+    }
 }
