@@ -6,6 +6,13 @@ cluster_name  = "Weapon-X"
 instance_type = "m4.large"
 spot_price    = "0.10"
 ebs_optimized = false
+spot_min_size    = "1"
+spot_max_size    = "2"
+spot_desired_capacity    = "1"
+spot_scale_up_cron    = "0 12 * * *"
+spot_scale_down_cron    = "0 0 * * *"
+spot_scale_down_min_size    = "0"
+spot_scale_down_desired_capacity    = "0"
 
 project                     = "Weapon-X"
 purpose                     =  "Docker container scheduler"

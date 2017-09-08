@@ -90,7 +90,7 @@ data "template_cloudinit_config" "cloud_config" {
     }
 }
 
-resource "aws_launch_configuration" "worker" {
+resource "aws_launch_configuration" "worker_spot" {
     name_prefix                 = "worker-"
     image_id                    = "${data.aws_ami.ecs_ami.id}"
     instance_type               = "${var.instance_type}"
@@ -107,16 +107,16 @@ resource "aws_launch_configuration" "worker" {
     }
 }
 
-resource "aws_autoscaling_group" "worker" {
+resource "aws_autoscaling_group" "worker_spot" {
     name_prefix               = "Worker"
-    max_size                  = "${var.max_size}"
-    min_size                  = "${var.min_size}"
+    max_size                  = "${var.spot_max_size}"
+    min_size                  = "${var.spot_min_size}"
     availability_zones        = ["${data.terraform_remote_state.vpc.availability_zones}"]
     default_cooldown          = "${var.cooldown}"
-    launch_configuration      = "${aws_launch_configuration.worker.name}"
+    launch_configuration      = "${aws_launch_configuration.worker_spot.name}"
     health_check_grace_period = "${var.health_check_grace_period }"
     health_check_type         = "EC2"
-    desired_capacity          = "${var.desired_capacity}"
+    desired_capacity          = "${var.spot_desired_capacity}"
     vpc_zone_identifier       = ["${data.terraform_remote_state.vpc.private_subnet_ids}"]
     termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
     enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
@@ -125,7 +125,7 @@ resource "aws_autoscaling_group" "worker" {
     }
     tag {
         key                 = "Name"
-        value               = "Worker"
+        value               = "Worker (spot)"
         propagate_at_launch = true
     }
     tag {
@@ -153,4 +153,22 @@ resource "aws_autoscaling_group" "worker" {
         value               = "${var.freetext}"
         propagate_at_launch = true
     }
+}
+
+resource "aws_autoscaling_schedule" "spot_scale_up" {
+    autoscaling_group_name = "${aws_autoscaling_group.worker_spot.name}"
+    scheduled_action_name  = "Scale Up (spot)"
+    recurrence             = "${var.spot_scale_up_cron}"
+    min_size               = "${var.spot_min_size}"
+    max_size               = "${var.spot_max_size}"
+    desired_capacity       = "${var.spot_desired_capacity}"
+}
+
+resource "aws_autoscaling_schedule" "spot_scale_down" {
+    autoscaling_group_name = "${aws_autoscaling_group.worker_spot.name}"
+    scheduled_action_name  = "Scale Down (spot)"
+    recurrence             = "${var.spot_scale_down_cron}"
+    min_size               = "${var.spot_scale_down_min_size}"
+    max_size               = "${var.spot_max_size}"
+    desired_capacity       = "${var.spot_scale_down_desired_capacity}"
 }

@@ -81,19 +81,19 @@ variable "project" {
 
 variable "purpose" {
     type = "string"
-    description = "Role or reason for the existence of the instance"
-    default = "Controls SSH access to instances within the VPC"
+    description = "Role or reason for the existence of the resources"
+    default = "Docker container scheduler"
 }
 
 variable "creator" {
     type = "string"
-    description = "Person creating the instance"
+    description = "Person creating the resources"
     default = "nobody@example.com"
 }
 
 variable "environment" {
     type = "string"
-    description = "Context the instance will be used in, e.g. production"
+    description = "Context the resource will be used in, e.g. production"
     default = "development"
 }
 
@@ -113,13 +113,13 @@ variable "ssh_key_name" {
     description = "Name of the SSH key pair to use when logging into the bastion host"
 }
 
-variable "max_size" {
+variable "spot_max_size" {
     type = "string"
     description = "Maximum number of bastion instances that can be run simultaneously"
     default = "2"
 }
 
-variable "min_size" {
+variable "spot_min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be run simultaneously"
     default = "1"
@@ -137,19 +137,19 @@ variable "health_check_grace_period" {
     default = "300"
 }
 
-variable "desired_capacity" {
+variable "spot_desired_capacity" {
     type = "string"
     description = "The number of Amazon EC2 instances that should be running in the group."
     default = "1"
 }
 
-variable "scale_down_desired_capacity" {
+variable "spot_scale_down_desired_capacity" {
     type = "string"
     description = "The number of Amazon EC2 instances that should be running when scaling down."
     default = "0"
 }
 
-variable "scaled_down_min_size" {
+variable "spot_scale_down_min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be running when scaling down"
     default = "0"
@@ -161,15 +161,15 @@ variable "ssh_ingress_cidr_blocks" {
     default = ["98.216.147.13/32"]
 }
 
-variable "scale_up_cron" {
+variable "spot_scale_up_cron" {
     type = "string"
-    description = "In UTC, when to scale up the bastion servers"
+    description = "In UTC, when to scale up the worker instances"
     default = "0 12 * * *"
 }
 
-variable "scale_down_cron" {
+variable "spot_scale_down_cron" {
     type = "string"
-    description = "In UTC, when to scale down the bastion servers"
+    description = "In UTC, when to scale down the worker instances"
     default = "0 0 * * *"
 }
 
