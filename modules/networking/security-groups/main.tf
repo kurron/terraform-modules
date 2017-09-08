@@ -100,6 +100,18 @@ resource "aws_security_group_rule" "bastion_ingress" {
     }
 }
 
+resource "aws_security_group_rule" "bastion_egress" {
+    type              = "egress"
+    cidr_blocks       = ["0.0.0.0/0"]
+    from_port         = 0
+    protocol          = "all"
+    security_group_id = "${aws_security_group.bastion_access.id}"
+    to_port           = 65535
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
 resource "aws_security_group_rule" "ec2_ingress" {
     type                     = "ingress"
     from_port                = 0
@@ -107,6 +119,18 @@ resource "aws_security_group_rule" "ec2_ingress" {
     security_group_id        = "${aws_security_group.ec2_access.id}"
     source_security_group_id = "${aws_security_group.bastion_access.id}"
     to_port                  = 65535
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+resource "aws_security_group_rule" "ec2_egress" {
+    type               = "ingress"
+    cidr_blocks        = ["0.0.0.0/0"]
+    from_port          = 0
+    protocol           = "all"
+    security_group_id  = "${aws_security_group.ec2_access.id}"
+    to_port            = 65535
     lifecycle {
         create_before_destroy = true
     }
