@@ -7,6 +7,12 @@ instance_type = "m4.large"
 spot_price    = "0.10"
 ebs_optimized = false
 
+project                     = "Weapon-X"
+purpose                     =  "Docker container scheduler"
+creator                     = "sampson@example.com"
+environment                 = "development"
+freetext                    = "No notes at this time"
+
 iam_bucket                  = "transparent-terraform-state"
 iam_key                     = "development/security/iam/terraform.tfstate"
 iam_region                  = "us-east-1"

@@ -91,7 +91,7 @@ data "template_cloudinit_config" "cloud_config" {
 }
 
 resource "aws_launch_configuration" "worker" {
-    name_prefix                 = "worker-${var.project}-"
+    name_prefix                 = "worker-"
     image_id                    = "${data.aws_ami.ecs_ami.id}"
     instance_type               = "${var.instance_type}"
     iam_instance_profile        = "${data.terraform_remote_state.iam.profile}"
@@ -104,5 +104,53 @@ resource "aws_launch_configuration" "worker" {
     spot_price                  = "${var.spot_price}"
     lifecycle {
         create_before_destroy = true
+    }
+}
+
+resource "aws_autoscaling_group" "worker" {
+    name_prefix               = "Worker"
+    max_size                  = "${var.max_size}"
+    min_size                  = "${var.min_size}"
+    availability_zones        = ["${data.terraform_remote_state.vpc.availability_zones}"]
+    default_cooldown          = "${var.cooldown}"
+    launch_configuration      = "${aws_launch_configuration.worker.name}"
+    health_check_grace_period = "${var.health_check_grace_period }"
+    health_check_type         = "EC2"
+    desired_capacity          = "${var.desired_capacity}"
+    vpc_zone_identifier       = ["${data.terraform_remote_state.vpc.private_subnet_ids}"]
+    termination_policies      = ["ClosestToNextInstanceHour", "OldestInstance", "Default"]
+    enabled_metrics           = ["GroupMinSize", "GroupMaxSize", "GroupDesiredCapacity", "GroupInServiceInstances", "GroupPendingInstances", "GroupStandbyInstances", "GroupTerminatingInstances", "GroupTotalInstances"]
+    lifecycle {
+        create_before_destroy = true
+    }
+    tag {
+        key                 = "Name"
+        value               = "Worker"
+        propagate_at_launch = true
+    }
+    tag {
+        key                 = "Project"
+        value               = "${var.project}"
+        propagate_at_launch = true
+    }
+    tag {
+        key                 = "Purpose"
+        value               = "${var.purpose}"
+        propagate_at_launch = true
+    }
+    tag {
+        key                 = "Creator"
+        value               = "${var.creator}"
+        propagate_at_launch = true
+    }
+    tag {
+        key                 = "Environment"
+        value               = "${var.environment}"
+        propagate_at_launch = true
+    }
+    tag {
+        key                 = "Freetext"
+        value               = "${var.freetext}"
+        propagate_at_launch = true
     }
 }
