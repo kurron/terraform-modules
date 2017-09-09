@@ -2,9 +2,9 @@
 
 region                      = "us-west-2"
 
+vpc_region                  = "us-east-1"
 vpc_bucket                  = "transparent-terraform-state"
 vpc_key                     = "development/networking/vpc/terraform.tfstate"
-vpc_region                  = "us-east-1"
 name                        = "Experiment"
 
 project                     = "Weapon-X"
