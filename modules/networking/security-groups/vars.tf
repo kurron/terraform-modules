@@ -34,41 +34,34 @@ variable "vpc_region" {
 variable "name" {
     type = "string"
     description = "Name of the resource"
-    default = "Experiment"
 }
 
 variable "project" {
     type = "string"
-    description = "Name of the project this resource is being created for"
-    default = "Weapon-X"
+    description = "Name of the project these resources are being created for"
 }
 
 variable "purpose" {
     type = "string"
-    description = "Role or reason for the existence of the resources"
-    default = "Separate network for experimentation"
+    description = "Role or reason for the existence of these resources"
 }
 
 variable "creator" {
     type = "string"
-    description = "Person creating the resources"
-    default = "nobody@example.com"
+    description = "Person creating these resources"
 }
 
 variable "environment" {
     type = "string"
-    description = "Context the resources will be used in, e.g. production"
-    default = "development"
+    description = "Context these resources will be used in, e.g. production"
 }
 
 variable "freetext" {
     type = "string"
     description = "Information that does not fit in the other tags"
-    default = "No notes at this time"
 }
 
 variable "bastion_ingress_cidr_blocks" {
     type = "list"
     description = "IP ranges to allows inbound SSH access to"
-    default = ["98.216.147.13/32"]
 }
