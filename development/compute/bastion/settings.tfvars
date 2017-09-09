@@ -16,7 +16,6 @@ freetext                    = "No notes at this time"
 
 instance_type               = "t2.nano"
 ssh_key_name                = "asgard-lite-test"
-ssh_ingress_cidr_blocks     = ["98.216.147.13/32"]
 min_size                    = "1"
 max_size                    = "2"
 cooldown                    = "60"
