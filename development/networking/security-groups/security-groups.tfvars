@@ -8,7 +8,6 @@ vpc_region                  = "us-east-1"
 name                        = "Experiment"
 
 project                     = "Weapon-X"
-purpose                     = "Not sure if this is being used or not"
 creator                     = "logan@example.com"
 environment                 = "development"
 freetext                    = "No notes at this time"

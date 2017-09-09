@@ -20,22 +20,22 @@ variable "name" {
 
 variable "project" {
     type = "string"
-    description = "Name of the project this VPC is being created for"
+    description = "Name of the project these resources are being created for"
 }
 
 variable "purpose" {
     type = "string"
-    description = "Role or reason for the existence of the VPC"
+    description = "Role or reason for the existence of these resources"
 }
 
 variable "creator" {
     type = "string"
-    description = "Person creating the VPC"
+    description = "Person creating these resources"
 }
 
 variable "environment" {
     type = "string"
-    description = "Context the VPC will be used in, e.g. production"
+    description = "Context these resources will be used in, e.g. production"
 }
 
 variable "freetext" {

@@ -31,19 +31,9 @@ variable "vpc_region" {
     default = "us-east-1"
 }
 
-variable "name" {
-    type = "string"
-    description = "Name of the resource"
-}
-
 variable "project" {
     type = "string"
     description = "Name of the project these resources are being created for"
-}
-
-variable "purpose" {
-    type = "string"
-    description = "Role or reason for the existence of these resources"
 }
 
 variable "creator" {
