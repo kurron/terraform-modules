@@ -38,7 +38,7 @@ data "terraform_remote_state" "iam" {
 
 data "aws_ami" "ecs_ami" {
     most_recent = true
-    name_regex  = "^amzn-ami-.*amazon-ecs-optimized$"
+    name_regex  = "^amzn-ami-.*-amazon-ecs-optimized$"
     owners      = ["amazon"]
     filter {
        name   = "architecture"
@@ -77,7 +77,7 @@ resource "aws_ecs_cluster" "main" {
 data "template_file" "ecs_cloud_config" {
     template = "${file("${path.module}/cloud-config.yml.template")}"
     vars {
-        cluster_name      = "${aws_ecs_cluster.main.name}"
+        cluster_name = "${aws_ecs_cluster.main.name}"
     }
 }
 

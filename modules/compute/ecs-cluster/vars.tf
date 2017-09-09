@@ -65,7 +65,7 @@ variable "iam_region" {
 
 variable "project" {
     type = "string"
-    description = "Name of the project this instance is being created for"
+    description = "Name of the project these resources are being created for"
 }
 
 variable "creator" {
@@ -75,7 +75,7 @@ variable "creator" {
 
 variable "environment" {
     type = "string"
-    description = "Context the resource will be used in, e.g. production"
+    description = "Context the resources will be used in, e.g. production"
 }
 
 variable "freetext" {
@@ -85,22 +85,22 @@ variable "freetext" {
 
 variable "instance_type" {
     type = "string"
-    description = "Instance type to make the Bastion host from"
+    description = "Instance type to make the worker hosts from"
 }
 
 variable "ssh_key_name" {
     type = "string"
-    description = "Name of the SSH key pair to use when logging into the bastion host"
+    description = "Name of the SSH key pair to use when logging into the worker hosts"
 }
 
 variable "spot_max_size" {
     type = "string"
-    description = "Maximum number of bastion instances that can be run simultaneously"
+    description = "Maximum number of worker instances that can be run simultaneously"
 }
 
 variable "spot_min_size" {
     type = "string"
-    description = "Minimum number of bastion instances that can be run simultaneously"
+    description = "Minimum number of work instances that can be run simultaneously"
 }
 
 variable "cooldown" {
@@ -110,22 +110,22 @@ variable "cooldown" {
 
 variable "health_check_grace_period" {
     type = "string"
-    description = "Time (in seconds) after instance comes into service before checking health."
+    description = "Time, in seconds, after instance comes into service before checking health."
 }
 
 variable "spot_desired_capacity" {
     type = "string"
-    description = "The number of Amazon EC2 instances that should be running in the group."
+    description = "The number of workers that should be running in the group."
 }
 
 variable "spot_scale_down_desired_capacity" {
     type = "string"
-    description = "The number of Amazon EC2 instances that should be running when scaling down."
+    description = "The number of workers that should be running when scaling down."
 }
 
 variable "spot_scale_down_min_size" {
     type = "string"
-    description = "Minimum number of bastion instances that can be running when scaling down"
+    description = "Minimum number of workers that can be running when scaling down"
 }
 
 variable "spot_scale_up_cron" {
@@ -145,5 +145,5 @@ variable "spot_price" {
 
 variable "ebs_optimized" {
     type = "string"
-    description = " If true, the launched EC2 instance will be EBS-optimized."
+    description = " If true, the launched worker will be EBS-optimized."
 }
