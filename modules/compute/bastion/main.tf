@@ -88,7 +88,7 @@ resource "aws_autoscaling_group" "bastion" {
     }
     tag {
         key                 = "Name"
-        value               = "${var.name}"
+        value               = "Bastion"
         propagate_at_launch = true
     }
     tag {
@@ -98,7 +98,7 @@ resource "aws_autoscaling_group" "bastion" {
     }
     tag {
         key                 = "Purpose"
-        value               = "${var.purpose}"
+        value               = "Controls SSH access to instances within the VPC"
         propagate_at_launch = true
     }
     tag {

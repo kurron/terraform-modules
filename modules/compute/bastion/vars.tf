@@ -13,82 +13,59 @@ variable "aws_secret_key" {
     description = "Secret value of the API key to use"
 }
 
-variable "name" {
-    type = "string"
-    description = "Name of the instance"
-    default = "Experiment"
-}
-
 variable "vpc_bucket" {
     type = "string"
     description = "S3 bucket containing the VPC Terraform state"
-    default = "transparent-terraform-state"
 }
 
 variable "vpc_key" {
     type = "string"
     description = "S3 key pointing to the VPC Terraform state"
-    default = "development/networking/vpc/terraform.tfstate"
 }
 
 variable "vpc_region" {
     type = "string"
     description = "Region where the S3 bucket containing the VPC Terraform state is located"
-    default = "us-east-1"
 }
 
 variable "security_groups_bucket" {
     type = "string"
     description = "S3 bucket containing the security groups Terraform state"
-    default = "transparent-terraform-state"
 }
 
 variable "security_groups_key" {
     type = "string"
     description = "S3 key pointing to the security groups Terraform state"
-    default = "development/networking/security-groups/terraform.tfstate"
 }
 
 variable "security_groups_region" {
     type = "string"
     description = "Region where the S3 bucket containing the security groups Terraform state is located"
-    default = "us-east-1"
 }
 
 variable "project" {
     type = "string"
-    description = "Name of the project this instance is being created for"
-    default = "Weapon-X"
-}
-
-variable "purpose" {
-    type = "string"
-    description = "Role or reason for the existence of the instance"
-    default = "Controls SSH access to instances within the VPC"
+    description = "Name of the project these resources are being created for"
 }
 
 variable "creator" {
     type = "string"
-    description = "Person creating the instance"
-    default = "nobody@example.com"
+    description = "Person creating these resources"
 }
 
 variable "environment" {
     type = "string"
-    description = "Context the instance will be used in, e.g. production"
-    default = "development"
+    description = "Context these resources will be used in, e.g. production"
 }
 
 variable "freetext" {
     type = "string"
     description = "Information that does not fit in the other tags"
-    default = "No notes at this time"
 }
 
 variable "instance_type" {
     type = "string"
     description = "Instance type to make the Bastion host from"
-    default = "t2.nano"
 }
 
 variable "ssh_key_name" {
@@ -99,43 +76,36 @@ variable "ssh_key_name" {
 variable "max_size" {
     type = "string"
     description = "Maximum number of bastion instances that can be run simultaneously"
-    default = "2"
 }
 
 variable "min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be run simultaneously"
-    default = "1"
 }
 
 variable "cooldown" {
     type = "string"
     description = "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start."
-    default = "60"
 }
 
 variable "health_check_grace_period" {
     type = "string"
-    description = "Time (in seconds) after instance comes into service before checking health."
-    default = "300"
+    description = "Time, in seconds, after instance comes into service before checking health."
 }
 
 variable "desired_capacity" {
     type = "string"
-    description = "The number of Amazon EC2 instances that should be running in the group."
-    default = "1"
+    description = "The number of bastion instances that should be running in the group."
 }
 
 variable "scale_down_desired_capacity" {
     type = "string"
-    description = "The number of Amazon EC2 instances that should be running when scaling down."
-    default = "0"
+    description = "The number of bastion instances that should be running when scaling down."
 }
 
 variable "scale_down_min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be running when scaling down"
-    default = "0"
 }
 
 variable "scale_up_cron" {
