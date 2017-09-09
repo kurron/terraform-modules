@@ -16,91 +16,71 @@ variable "aws_secret_key" {
 variable "cluster_name" {
     type = "string"
     description = "The name of the cluster (up to 255 letters, numbers, hyphens, and underscores) "
-    default = "Experiment"
 }
 
 variable "vpc_bucket" {
     type = "string"
     description = "S3 bucket containing the VPC Terraform state"
-    default = "transparent-terraform-state"
 }
 
 variable "vpc_key" {
     type = "string"
     description = "S3 key pointing to the VPC Terraform state"
-    default = "development/networking/vpc/terraform.tfstate"
 }
 
 variable "vpc_region" {
     type = "string"
     description = "Region where the S3 bucket containing the VPC Terraform state is located"
-    default = "us-east-1"
 }
 
 variable "security_groups_bucket" {
     type = "string"
     description = "S3 bucket containing the security groups Terraform state"
-    default = "transparent-terraform-state"
 }
 
 variable "security_groups_key" {
     type = "string"
     description = "S3 key pointing to the security groups Terraform state"
-    default = "development/networking/security-groups/terraform.tfstate"
 }
 
 variable "security_groups_region" {
     type = "string"
     description = "Region where the S3 bucket containing the security groups Terraform state is located"
-    default = "us-east-1"
 }
 
 variable "iam_bucket" {
     type = "string"
     description = "S3 bucket containing the IAM Terraform state"
-    default = "transparent-terraform-state"
 }
 
 variable "iam_key" {
     type = "string"
     description = "S3 key pointing to the IAM Terraform state"
-    default = "development/security/iam/terraform.tfstate"
 }
 
 variable "iam_region" {
     type = "string"
     description = "Region where the S3 bucket containing the IAM Terraform state is located"
-    default = "us-east-1"
 }
 
 variable "project" {
     type = "string"
     description = "Name of the project this instance is being created for"
-    default = "Weapon-X"
-}
-
-variable "purpose" {
-    type = "string"
-    description = "Role or reason for the existence of the resources"
-    default = "Docker container scheduler"
 }
 
 variable "creator" {
     type = "string"
     description = "Person creating the resources"
-    default = "nobody@example.com"
 }
 
 variable "environment" {
     type = "string"
     description = "Context the resource will be used in, e.g. production"
-    default = "development"
 }
 
 variable "freetext" {
     type = "string"
     description = "Information that does not fit in the other tags"
-    default = "No notes at this time"
 }
 
 variable "instance_type" {
@@ -116,61 +96,46 @@ variable "ssh_key_name" {
 variable "spot_max_size" {
     type = "string"
     description = "Maximum number of bastion instances that can be run simultaneously"
-    default = "2"
 }
 
 variable "spot_min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be run simultaneously"
-    default = "1"
 }
 
 variable "cooldown" {
     type = "string"
     description = "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start."
-    default = "60"
 }
 
 variable "health_check_grace_period" {
     type = "string"
     description = "Time (in seconds) after instance comes into service before checking health."
-    default = "300"
 }
 
 variable "spot_desired_capacity" {
     type = "string"
     description = "The number of Amazon EC2 instances that should be running in the group."
-    default = "1"
 }
 
 variable "spot_scale_down_desired_capacity" {
     type = "string"
     description = "The number of Amazon EC2 instances that should be running when scaling down."
-    default = "0"
 }
 
 variable "spot_scale_down_min_size" {
     type = "string"
     description = "Minimum number of bastion instances that can be running when scaling down"
-    default = "0"
-}
-
-variable "ssh_ingress_cidr_blocks" {
-    type = "list"
-    description = "IP ranges to allows inbound SSH access to"
-    default = ["98.216.147.13/32"]
 }
 
 variable "spot_scale_up_cron" {
     type = "string"
     description = "In UTC, when to scale up the worker instances"
-    default = "0 12 * * *"
 }
 
 variable "spot_scale_down_cron" {
     type = "string"
     description = "In UTC, when to scale down the worker instances"
-    default = "0 0 * * *"
 }
 
 variable "spot_price" {
@@ -181,5 +146,4 @@ variable "spot_price" {
 variable "ebs_optimized" {
     type = "string"
     description = " If true, the launched EC2 instance will be EBS-optimized."
-    default = false
 }

@@ -135,7 +135,7 @@ resource "aws_autoscaling_group" "worker_spot" {
     }
     tag {
         key                 = "Purpose"
-        value               = "${var.purpose}"
+        value               = "ECS Worker (spot)"
         propagate_at_launch = true
     }
     tag {
