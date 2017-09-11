@@ -3,3 +3,4 @@ crash.log
 terraform.tfstate
 terraform.tfstate.backup
 *.plan
+proposed-changes.plan
