@@ -85,7 +85,7 @@ resource "aws_subnet" "private" {
 resource "aws_route_table" "public" {
     vpc_id = "${aws_vpc.main.id}"
     tags {
-        Name        = "${var.name} Public"
+        Name        = "Public ${format("%02d", count.index+1 )}"
         Project     = "${var.project}"
         Purpose     = "Handles routing of public subnet instances"
         Creator     = "${var.creator}"
@@ -110,7 +110,7 @@ resource "aws_route_table" "private" {
     count  = "${length( var.private_subnets) }"
     vpc_id = "${aws_vpc.main.id}"
     tags {
-        Name        = "Private ${format("internal-%02d", count.index+1 )}"
+        Name        = "Private ${format("%02d", count.index+1 )}"
         Project     = "${var.project}"
         Purpose     = "Handles routing of private subnet instances"
         Creator     = "${var.creator}"
