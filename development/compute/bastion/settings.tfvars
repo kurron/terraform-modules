@@ -2,15 +2,15 @@
 
 region                      = "us-west-2"
 
-vpc_bucket                  = "transparent-terraform-state"
+vpc_bucket                  = "transparent-test-terraform-state"
 vpc_key                     = "development/networking/vpc/terraform.tfstate"
 vpc_region                  = "us-east-1"
-security_groups_bucket      = "transparent-terraform-state"
+security_groups_bucket      = "transparent-test-terraform-state"
 security_groups_key         = "development/networking/security-groups/terraform.tfstate"
 security_groups_region      = "us-east-1"
 
 project                     = "Weapon-X"
-creator                     = "devan@example.com"
+creator                     = "rkurr@transparent.com"
 environment                 = "development"
 freetext                    = "No notes at this time"
 
@@ -25,3 +25,4 @@ scale_down_desired_capacity = "0"
 scale_down_min_size         = "0"
 scale_up_cron               = "0 12 * * *"
 scale_down_cron             = "0 0 * * *"
+public_ssh_key              = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCv70t6ne08BNDf3aAQOdhe7h1NssBGPEucjKA/gL9vXpclGBqZnvOiQltKrOeOLzcbDJYDMYIJCwtoq7R/3RLOLDSi5OChhFtyjGULkIxa2dJgKXWPz04E1260CMqkKcgrQ1AaYA122zepakE7d+ysMoKSbQSVGaleZ6aFxe8DfKMzAFFra44tF5JUSMpuqwwI/bKEyehX/PDMNe/GWUTk+5c4XC6269NbaeWMivH2CiYPPBXblj6IT+QhBY5bTEFT57GmUff1sJOyhGN+9kMhlsSrXtp1A5wGiZ8nhoUduphzP3h0RNbRVA4mmI4jMnOF51uKbOvNk3Y79FSIS9Td Access to Bastion box"

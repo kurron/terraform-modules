@@ -22,3 +22,8 @@ output "auto_scaling_group_name" {
     value = "${aws_autoscaling_group.bastion.name}"
     description = "Name of the Bastion's auto scaling group"
 }
+
+output "ssh_key_name" {
+    value = "${aws_key_pair.bastion.key_name}"
+    description = "Name of the Bastion's SSH key"
+}

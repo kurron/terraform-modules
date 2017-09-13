@@ -57,11 +57,16 @@ data "aws_ami" "amazon_linux_ami" {
     }
 }
 
+resource "aws_key_pair" "bastion" {
+    key_name_prefix = "bastion"
+    public_key      = "${var.public_ssh_key}"
+}
+
 resource "aws_launch_configuration" "bastion" {
     name_prefix                 = "bastion-"
     image_id                    = "${data.aws_ami.amazon_linux_ami.id}"
     instance_type               = "${var.instance_type}"
-    key_name                    = "${var.ssh_key_name}"
+    key_name                    = "${aws_key_pair.bastion.key_name}"
     security_groups             = ["${data.terraform_remote_state.security-groups.bastion_id}"]
     associate_public_ip_address = true
     enable_monitoring           = true

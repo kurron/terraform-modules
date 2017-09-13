@@ -111,11 +111,14 @@ variable "scale_down_min_size" {
 variable "scale_up_cron" {
     type = "string"
     description = "In UTC, when to scale up the bastion servers"
-    default = "0 12 * * *"
 }
 
 variable "scale_down_cron" {
     type = "string"
     description = "In UTC, when to scale down the bastion servers"
-    default = "0 0 * * *"
+}
+
+variable "public_ssh_key" {
+    type = "string"
+    description = "Public half of the SSH key to import into AWS"
 }
