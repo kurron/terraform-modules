@@ -63,6 +63,21 @@ variable "iam_region" {
     description = "Region where the S3 bucket containing the IAM Terraform state is located"
 }
 
+variable "bastion_bucket" {
+    type = "string"
+    description = "S3 bucket containing the Bastion Terraform state"
+}
+
+variable "bastion_key" {
+    type = "string"
+    description = "S3 key pointing to the Bastion Terraform state"
+}
+
+variable "bastion_region" {
+    type = "string"
+    description = "Region where the S3 bucket containing the Bastion Terraform state is located"
+}
+
 variable "project" {
     type = "string"
     description = "Name of the project these resources are being created for"
@@ -86,11 +101,6 @@ variable "freetext" {
 variable "instance_type" {
     type = "string"
     description = "Instance type to make the worker hosts from"
-}
-
-variable "ssh_key_name" {
-    type = "string"
-    description = "Name of the SSH key pair to use when logging into the worker hosts"
 }
 
 variable "spot_max_size" {

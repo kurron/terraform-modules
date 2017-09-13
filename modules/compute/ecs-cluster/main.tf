@@ -36,6 +36,15 @@ data "terraform_remote_state" "iam" {
     }
 }
 
+data "terraform_remote_state" "bastion" {
+    backend = "s3"
+    config {
+        bucket = "${var.bastion_bucket}"
+        key    = "${var.bastion_key}"
+        region = "${var.bastion_region}"
+    }
+}
+
 data "aws_ami" "ecs_ami" {
     most_recent = true
     name_regex  = "^amzn-ami-.*-amazon-ecs-optimized$"
@@ -95,7 +104,7 @@ resource "aws_launch_configuration" "worker_spot" {
     image_id                    = "${data.aws_ami.ecs_ami.id}"
     instance_type               = "${var.instance_type}"
     iam_instance_profile        = "${data.terraform_remote_state.iam.profile}"
-    key_name                    = "${var.ssh_key_name}"
+    key_name                    = "${data.terraform_remote_state.bastion.ssh_key_name}"
     security_groups             = ["${data.terraform_remote_state.security-groups.ec2_id}"]
     user_data                   = "${data.template_cloudinit_config.cloud_config.rendered}"
     associate_public_ip_address = false
