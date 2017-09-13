@@ -58,7 +58,7 @@ data "aws_ami" "amazon_linux_ami" {
 }
 
 resource "aws_key_pair" "bastion" {
-    key_name_prefix = "bastion"
+    key_name_prefix = "bastion-"
     public_key      = "${var.public_ssh_key}"
 }
 
