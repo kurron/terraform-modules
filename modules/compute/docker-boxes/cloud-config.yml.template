@@ -1,0 +1,3 @@
+#cloud-config
+bootcmd:
+- docker stop ecs-agent
