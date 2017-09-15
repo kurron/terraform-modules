@@ -23,6 +23,5 @@ creator                = "rkurr@transparent.com"
 environment            = "development"
 freetext               = "No notes at this time"
 
-ssh_key_name                     = "asgard-lite-test"
 instance_type                    = "t2.nano"
 ebs_optimized                    = false
