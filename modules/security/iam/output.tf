@@ -9,3 +9,15 @@ output "arn" {
 output "profile" {
   value = "${aws_iam_instance_profile.default_ecs.id}"
 }
+
+output "cross_account_ecr_pull_role_id" {
+  value = "${aws_iam_role.cross_account_ecr_pull_role.id}"
+}
+
+output "cross_account_ecr_pull_role_arn" {
+  value = "${aws_iam_role.cross_account_ecr_pull_role.arn}"
+}
+
+output "cross_account_ecr_pull_profile_id" {
+  value = "${aws_iam_instance_profile.cross_account_ecr_pull_profile.id}"
+}

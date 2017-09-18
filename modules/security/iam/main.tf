@@ -18,6 +18,25 @@ data "terraform_remote_state" "vpc" {
     }
 }
 
+# construct a role that allows pulling from ECR
+resource "aws_iam_role" "cross_account_ecr_pull_role" {
+    name_prefix        = "ecr-pull-"
+    description        = "Allows EC2 instances to assume required roles"
+    assume_role_policy = "${file( "${path.module}/ecr-pull-only-role-policy.json" )}"
+}
+
+resource "aws_iam_role_policy" "cross_account_ecr_pull_role_policy" {
+    name_prefix = "ecr-pull-"
+    role        = "${aws_iam_role.cross_account_ecr_pull_role.id}"
+    policy      = "${file("${path.module}/ecr-pull-only-policy.json")}"
+}
+
+resource "aws_iam_instance_profile" "cross_account_ecr_pull_profile" {
+    name_prefix = "ecr-pull-"
+    role  = "${aws_iam_role.cross_account_ecr_pull_role.name}"
+}
+
+# construct a role that alloww ECS instances to interact with load balancers
 resource "aws_iam_role" "default_ecs_role" {
     name_prefix = "ecs-role"
     description = "Allows ECS workers to assume required roles"
