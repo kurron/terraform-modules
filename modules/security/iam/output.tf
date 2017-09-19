@@ -21,3 +21,15 @@ output "cross_account_ecr_pull_role_arn" {
 output "cross_account_ecr_pull_profile_id" {
   value = "${aws_iam_instance_profile.cross_account_ecr_pull_profile.id}"
 }
+
+output "start_stop_role_id" {
+  value = "${aws_iam_role.ec2_start_stop.id}"
+}
+
+output "start_stop_role_arn" {
+  value = "${aws_iam_role.ec2_start_stop.arn}"
+}
+
+output "start_stop_profile_id" {
+  value = "${aws_iam_instance_profile.ec2_start_stop.id}"
+}

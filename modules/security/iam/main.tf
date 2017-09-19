@@ -18,6 +18,24 @@ data "terraform_remote_state" "vpc" {
     }
 }
 
+# construct a role that allows starting/stopping EC2 instances on a schedule
+resource "aws_iam_role" "ec2_start_stop" {
+    name_prefix        = "start-stop-"
+    description        = "Allows Lambda instances to assume required roles"
+    assume_role_policy = "${file( "${path.module}/files/ec2-start-stop-role-policy.json" )}"
+}
+
+resource "aws_iam_role_policy" "ec2_start_stop" {
+    name_prefix = "start-stop-"
+    role        = "${aws_iam_role.ec2_start_stop.id}"
+    policy      = "${file("${path.module}/files/ec2-start-stop-policy.json")}"
+}
+
+resource "aws_iam_instance_profile" "ec2_start_stop" {
+    name_prefix = "start-stop-"
+    role  = "${aws_iam_role.ec2_start_stop.name}"
+}
+
 # construct a role that allows pulling from ECR
 resource "aws_iam_role" "cross_account_ecr_pull_role" {
     name_prefix        = "ecr-pull-"
