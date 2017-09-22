@@ -22,7 +22,7 @@ data "terraform_remote_state" "vpc" {
 resource "aws_iam_role" "ec2_start_stop" {
     name_prefix        = "start-stop-"
     description        = "Allows Lambda instances to assume required roles"
-    assume_role_policy = "${file( "${path.module}/files/ec2-start-stop-role-policy.json" )}"
+    assume_role_policy = "${file( "${path.module}/files/ec2-start-stop-assumption-policy.json" )}"
 }
 
 resource "aws_iam_role_policy" "ec2_start_stop" {
@@ -40,7 +40,7 @@ resource "aws_iam_instance_profile" "ec2_start_stop" {
 resource "aws_iam_role" "cross_account_ecr_pull_role" {
     name_prefix        = "ecr-pull-"
     description        = "Allows EC2 instances to assume required roles"
-    assume_role_policy = "${file( "${path.module}/files/ecr-pull-only-role-policy.json" )}"
+    assume_role_policy = "${file( "${path.module}/files/ecr-pull-only-assumption-policy.json" )}"
 }
 
 resource "aws_iam_role_policy" "cross_account_ecr_pull_role_policy" {
