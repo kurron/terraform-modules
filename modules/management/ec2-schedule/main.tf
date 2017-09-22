@@ -38,3 +38,15 @@ resource "aws_cloudwatch_event_target" "start_lambda" {
     rule      = "${aws_cloudwatch_event_rule.ec2_start.name}"
     arn       = "${data.terraform_remote_state.lambda.start_arn}"
 }
+
+resource "aws_cloudwatch_event_rule" "ec2_stop" {
+    name        = "trigger-ec2-stop"
+    schedule_expression = "${var.stop_cron_expression}"
+    description = "Triggers the Lambda what will stop scheduled EC2 instances"
+    is_enabled = false
+}
+
+resource "aws_cloudwatch_event_target" "stop_lambda" {
+    rule      = "${aws_cloudwatch_event_rule.ec2_stop.name}"
+    arn       = "${data.terraform_remote_state.lambda.stop_arn}"
+}

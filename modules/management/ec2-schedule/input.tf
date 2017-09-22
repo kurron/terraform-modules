@@ -67,3 +67,8 @@ variable "start_cron_expression" {
     type = "string"
     description = "Cron expression describing when the instances should be started"
 }
+
+variable "stop_cron_expression" {
+    type = "string"
+    description = "Cron expression describing when the instances should be stopped"
+}
