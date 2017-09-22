@@ -37,9 +37,9 @@ data "archive_file" "start_lambda" {
 }
 
 resource "aws_lambda_function" "start_lambda" {
-    filename = "files/start-lambda.zip"
-    function_name = "start_lambda"
-    handler = "lambda_handler"
+    filename = "${path.module}/files/start-lambda.zip"
+    function_name = "ec2-scheduled-start"
+    handler = "start-lambda.py"
     role = "${data.terraform_remote_state.iam.start_stop_role_arn}"
     description = "Turns on EC2 instances that match the specified tag values"
     runtime = "python3.6"
