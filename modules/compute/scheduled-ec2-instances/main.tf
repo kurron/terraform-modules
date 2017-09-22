@@ -39,7 +39,7 @@ data "archive_file" "start_lambda" {
 resource "aws_lambda_function" "start_lambda" {
     filename = "${path.module}/archives/start-lambda.zip"
     function_name = "ec2-scheduled-start"
-    handler = "start-lambda.py"
+    handler = "start-lambda.lambda_handler"
     role = "${data.terraform_remote_state.iam.start_stop_role_arn}"
     description = "Turns on EC2 instances that match the specified tag values"
     runtime = "python3.6"
@@ -75,7 +75,7 @@ data "archive_file" "stop_lambda" {
 resource "aws_lambda_function" "stop_lambda" {
     filename = "${path.module}/archives/stop-lambda.zip"
     function_name = "ec2-scheduled-stop"
-    handler = "stop-lambda.py"
+    handler = "stop-lambda.lambda_handler"
     role = "${data.terraform_remote_state.iam.start_stop_role_arn}"
     description = "Turns off EC2 instances that match the specified tag values"
     runtime = "python3.6"

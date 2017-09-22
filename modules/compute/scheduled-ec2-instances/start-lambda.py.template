@@ -30,9 +30,7 @@ def lambda_handler(event, context):
     joined = ', '.join( instancelist )
     print( 'Filtered is ' + joined )
 
-    stop = ec2.start_instances(
+    start = ec2.start_instances(
         InstanceIds=instancelist,
         DryRun=False
     )
-
-    return 'Region is ' + region
