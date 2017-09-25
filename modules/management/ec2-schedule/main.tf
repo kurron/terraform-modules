@@ -50,3 +50,11 @@ resource "aws_cloudwatch_event_target" "stop_lambda" {
     rule      = "${aws_cloudwatch_event_rule.ec2_stop.name}"
     arn       = "${data.terraform_remote_state.lambda.stop_arn}"
 }
+
+resource "aws_lambda_permission" "allow_cloudwatch" {
+      action         = "lambda:InvokeFunction"
+      function_name  = "${data.terraform_remote_state.lambda.start_function_name}"
+      principal      = "events.amazonaws.com"
+      statement_id   = "AllowExecutionFromCloudWatch"
+      source_arn     = "${aws_cloudwatch_event_rule.ec2_start.arn}"
+}
