@@ -31,7 +31,7 @@ resource "aws_cloudwatch_event_rule" "ec2_start" {
     name        = "trigger-ec2-start"
     schedule_expression = "${var.start_cron_expression}"
     description = "Triggers the Lambda what will start scheduled EC2 instances"
-    is_enabled = true
+    is_enabled = false
 }
 
 resource "aws_cloudwatch_event_target" "start_lambda" {
@@ -43,7 +43,7 @@ resource "aws_cloudwatch_event_rule" "ec2_stop" {
     name        = "trigger-ec2-stop"
     schedule_expression = "${var.stop_cron_expression}"
     description = "Triggers the Lambda what will stop scheduled EC2 instances"
-    is_enabled = false
+    is_enabled = true
 }
 
 resource "aws_cloudwatch_event_target" "stop_lambda" {
@@ -51,10 +51,18 @@ resource "aws_cloudwatch_event_target" "stop_lambda" {
     arn       = "${data.terraform_remote_state.lambda.stop_arn}"
 }
 
-resource "aws_lambda_permission" "allow_cloudwatch" {
+resource "aws_lambda_permission" "allow_cloudwatch_start" {
       action         = "lambda:InvokeFunction"
       function_name  = "${data.terraform_remote_state.lambda.start_function_name}"
       principal      = "events.amazonaws.com"
       statement_id   = "AllowExecutionFromCloudWatch"
       source_arn     = "${aws_cloudwatch_event_rule.ec2_start.arn}"
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch_stop" {
+      action         = "lambda:InvokeFunction"
+      function_name  = "${data.terraform_remote_state.lambda.stop_function_name}"
+      principal      = "events.amazonaws.com"
+      statement_id   = "AllowExecutionFromCloudWatch"
+      source_arn     = "${aws_cloudwatch_event_rule.ec2_stop.arn}"
 }
