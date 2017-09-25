@@ -75,21 +75,8 @@ data "aws_ami" "ecs_ami" {
     }
 }
 
-data "template_file" "ecs_cloud_config" {
-    template = "${file("${path.module}/cloud-config.yml.template")}"
-}
-
-data "template_cloudinit_config" "cloud_config" {
-    gzip          = false
-    base64_encode = false
-    part {
-        content_type = "text/cloud-config"
-        content      = "${data.template_file.ecs_cloud_config.rendered}"
-    }
-}
-
 resource "aws_instance" "docker" {
-    count = 2
+    count = "${length( data.terraform_remote_state.vpc.private_subnet_ids )}"
 
     ami                    = "${data.aws_ami.ecs_ami.id}"
     ebs_optimized          = "${var.ebs_optimized}"
@@ -98,7 +85,6 @@ resource "aws_instance" "docker" {
     monitoring             = true
     vpc_security_group_ids = ["${data.terraform_remote_state.security-groups.ec2_id}"]
     subnet_id              = "${element( data.terraform_remote_state.vpc.private_subnet_ids, count.index )}"
-    user_data              = "${data.template_cloudinit_config.cloud_config.rendered}"
     iam_instance_profile   = "${data.terraform_remote_state.iam.profile}"
 
     tags {
@@ -108,6 +94,7 @@ resource "aws_instance" "docker" {
         Creator = "${var.creator}"
         Environment = "${var.environment}"
         Freetext = "${var.freetext}"
+        Scheduled = "Yes"
     }
     volume_tags {
         Name = "${format( "Docker %02d", count.index+1 )}"

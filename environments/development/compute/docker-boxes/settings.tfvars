@@ -23,5 +23,5 @@ creator                = "rkurr@transparent.com"
 environment            = "development"
 freetext               = "No notes at this time"
 
-instance_type                    = "t2.nano"
-ebs_optimized                    = false
+instance_type          = "t2.nano"
+ebs_optimized          = false
