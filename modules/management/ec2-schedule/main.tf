@@ -31,7 +31,7 @@ resource "aws_cloudwatch_event_rule" "ec2_start" {
     name        = "trigger-ec2-start"
     schedule_expression = "${var.start_cron_expression}"
     description = "Triggers the Lambda what will start scheduled EC2 instances"
-    is_enabled = false
+    is_enabled = true
 }
 
 resource "aws_cloudwatch_event_target" "start_lambda" {

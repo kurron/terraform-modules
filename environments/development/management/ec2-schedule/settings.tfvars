@@ -15,5 +15,5 @@ creator                = "rkurr@transparent.com"
 environment            = "development"
 freetext               = "No notes at this time"
 
-start_cron_expression = "rate(5 minutes)"
-stop_cron_expression  = "rate(5 minutes)"
+start_cron_expression = "cron(0 7 ? * MON-FRI *)"
+stop_cron_expression  = "cron(0 0 ? * MON-FRI *)"
