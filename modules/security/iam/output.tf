@@ -33,3 +33,11 @@ output "start_stop_role_arn" {
 output "start_stop_profile_id" {
   value = "${aws_iam_instance_profile.ec2_start_stop.id}"
 }
+
+output "dynamic_dns_role_id" {
+  value = "${aws_iam_role.dynamic_dns.id}"
+}
+
+output "dynamic_dns_role_arn" {
+  value = "${aws_iam_role.dynamic_dns.arn}"
+}

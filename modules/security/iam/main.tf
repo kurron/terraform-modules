@@ -18,7 +18,20 @@ data "terraform_remote_state" "vpc" {
     }
 }
 
-# construct a role that allows starting/stopping EC2 instances on a schedule
+# === construct a role that allows auto-registration of EC2 instances to Route53
+resource "aws_iam_role" "dynamic_dns" {
+    name_prefix        = "dynamic-dns-"
+    description        = "Allows Lambda instances to assume required roles"
+    assume_role_policy = "${file( "${path.module}/files/ddns-trust.json" )}"
+}
+
+resource "aws_iam_role_policy" "dynamic_dns" {
+    name_prefix = "dynamic-dns-"
+    role        = "${aws_iam_role.dynamic_dns.id}"
+    policy      = "${file("${path.module}/files/ddns-policy.json")}"
+}
+
+# === construct a role that allows starting/stopping EC2 instances on a schedule
 resource "aws_iam_role" "ec2_start_stop" {
     name_prefix        = "start-stop-"
     description        = "Allows Lambda instances to assume required roles"
@@ -36,7 +49,7 @@ resource "aws_iam_instance_profile" "ec2_start_stop" {
     role  = "${aws_iam_role.ec2_start_stop.name}"
 }
 
-# construct a role that allows pulling from ECR
+# === construct a role that allows pulling from ECR
 resource "aws_iam_role" "cross_account_ecr_pull_role" {
     name_prefix        = "ecr-pull-"
     description        = "Allows EC2 instances to assume required roles"
