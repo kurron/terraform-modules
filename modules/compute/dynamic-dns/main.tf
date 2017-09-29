@@ -42,7 +42,7 @@ resource "aws_lambda_function" "dynamic_dns" {
     handler = "union.lambda_handler"
     role = "${data.terraform_remote_state.iam.dynamic_dns_role_arn}"
     description = "Dynamically registers EC2 instances with Route53"
-    runtime = "python3.6"
+    runtime = "python2.7"
     source_code_hash = "${data.archive_file.dynamic_dns.output_base64sha256}"
     tags {
         Name = "Dynamic DNS"
