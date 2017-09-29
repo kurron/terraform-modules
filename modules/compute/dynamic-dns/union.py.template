@@ -33,6 +33,7 @@ def lambda_handler(event, context):
     table = dynamodb_resource.Table('DDNS')
 
     print 'State is ', state
+    print 'instance_id is ', instance_id
 
     if state == 'running':
         time.sleep(60)
