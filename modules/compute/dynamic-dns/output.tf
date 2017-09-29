@@ -8,7 +8,7 @@ output "dynamic_dns_modified" {
     description = "The date the start Lambda was last modified."
 }
 
-output "dynamic_dns_name" {
+output "dynamic_dns_function_name" {
     value = "${aws_lambda_function.dynamic_dns.function_name}"
     description = "Function name of the Dynamic DNS Lambda"
 }
